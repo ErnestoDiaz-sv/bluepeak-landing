@@ -20,6 +20,10 @@
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
@@ -37,7 +41,7 @@
           var(--bg);
         color: var(--text);
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         padding: 48px 20px;
       }
@@ -63,11 +67,35 @@
         margin: 16px 0 12px;
       }
 
+      h2 {
+        font-size: clamp(22px, 3vw, 30px);
+        margin: 40px 0 12px;
+      }
+
       p {
         margin: 0 0 16px;
         color: var(--muted);
         line-height: 1.6;
         font-size: 16px;
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 18px;
+        margin: 8px 0 20px;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+      }
+
+      .nav a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .nav a:hover {
+        color: var(--text);
       }
 
       .grid {
@@ -136,6 +164,23 @@
         margin-top: 12px;
       }
 
+      .section {
+        margin-top: 32px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      .list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .list li {
+        margin-bottom: 8px;
+      }
+
       @media (min-width: 720px) {
         .grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -146,11 +191,18 @@
   <body>
     <main class="shell">
       <div class="eyebrow">BluePeak HVAC AI</div>
-      <h1>Decision support for licensed HVAC professionals.</h1>
+      <h1>HVAC diagnostic decision support for licensed technicians and service managers.</h1>
       <p>
-        BluePeak HVAC AI is a SaaS workspace for technicians and service managers to organize field
-        readings, reference OEM data, and produce consistent diagnostic guidance inside the app.
+        BluePeak turns field readings into structured observations, recommended tests, and clear
+        confidence and limitation notes, plus PDF and email-ready reports. It is not a DIY tool and
+        does not replace technician judgment.
       </p>
+
+      <nav class="nav" aria-label="Page sections">
+        <a href="#outputs">What you get</a>
+        <a href="#how">How it works</a>
+        <a href="#inputs">What we need</a>
+      </nav>
 
       <div class="grid">
         <div class="card">
@@ -170,11 +222,55 @@
       </div>
 
       <div class="cta">
-        <a class="btn btn-primary" href="https://bluepeak-api.vercel.app/">Go to Technician Login</a>
-        <span class="btn btn-secondary" aria-hidden="true">Operational SaaS Platform</span>
+        <a class="btn btn-primary" href="https://bluepeak-api.vercel.app/">Technician Login</a>
+        <a class="btn btn-secondary" href="#how">How it works</a>
       </div>
 
-      <p class="note">Soft launch in progress. Access is currently restricted to approved teams.</p>
+      <p class="note">Private beta. Access is allowlisted by approved emails/domains.</p>
+
+      <section class="section" id="outputs">
+        <h2>What you get</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Structured diagnostic output.</strong>
+            <p class="legal">Observations, recommended tests, and findings grouped by system.</p>
+          </div>
+          <div class="card">
+            <strong>Confidence &amp; limitations.</strong>
+            <p class="legal">No firm conclusions when critical data is missing or inconsistent.</p>
+          </div>
+          <div class="card">
+            <strong>OEM-aware guidance.</strong>
+            <p class="legal">Matched models get OEM ranges; otherwise typical ranges are flagged.</p>
+          </div>
+          <div class="card">
+            <strong>PDF / email reports.</strong>
+            <p class="legal">Shareable summaries for internal handoff and documentation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <h2>How it works</h2>
+        <ol class="list">
+          <li>Create a case.</li>
+          <li>Enter symptoms, equipment details, and readings.</li>
+          <li>Generate analysis and reports.</li>
+        </ol>
+      </section>
+
+      <section class="section" id="inputs">
+        <h2>What we need for reliable results</h2>
+        <ul class="list">
+          <li>Return/supply temps (or delta T) and ambient temps.</li>
+          <li>Pressures, superheat/subcooling (as applicable).</li>
+          <li>Fault codes.</li>
+          <li>Airflow/static pressure (recommended).</li>
+        </ul>
+        <p class="legal">
+          Missing critical inputs reduces confidence and prevents firm conclusions.
+        </p>
+      </section>
     </main>
   </body>
 </html>
