@@ -1,277 +1,510 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BluePeak HVAC AI</title>
+    <title>BluePeak SaaS Deck</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
       :root {
-        color-scheme: dark;
-        --bg: #0b0f14;
-        --panel: #121822;
-        --text: #e6edf3;
-        --muted: #9fb0c0;
-        --accent: #5ad3c9;
-        --accent-2: #8aa9ff;
-        --border: #1f2a36;
+        --bg: #0b0f1a;
+        --bg-2: #111827;
+        --accent: #f59e0b;
+        --accent-2: #60a5fa;
+        --text: #f9fafb;
+        --muted: #9ca3af;
+        --card: #0f172a;
+        --line: rgba(148, 163, 184, 0.18);
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        min-height: 100vh;
-        font-family: "Optima", "Candara", "Lucida Sans", sans-serif;
-        background:
-          radial-gradient(1200px 600px at 10% -10%, rgba(90, 211, 201, 0.25), transparent 60%),
-          radial-gradient(1000px 500px at 90% 0%, rgba(138, 169, 255, 0.22), transparent 55%),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.02) 0,
-            rgba(255, 255, 255, 0.02) 1px,
-            transparent 1px,
-            transparent 120px
-          ),
-          var(--bg);
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
         color: var(--text);
+        background:
+          radial-gradient(1200px 800px at 80% 10%, rgba(96, 165, 250, 0.15), transparent 60%),
+          radial-gradient(900px 700px at 10% 90%, rgba(245, 158, 11, 0.12), transparent 60%),
+          linear-gradient(135deg, var(--bg), var(--bg-2));
+        min-height: 100vh;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
-        padding: 48px 20px;
+        padding: 24px;
       }
 
-      .shell {
-        width: min(880px, 100%);
-        background: linear-gradient(180deg, rgba(18, 24, 34, 0.92), rgba(12, 16, 23, 0.95));
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: clamp(28px, 5vw, 52px);
-        box-shadow: 0 24px 80px rgba(5, 10, 18, 0.7);
+      .deck {
+        width: min(1100px, 100%);
+        position: relative;
+        overflow: hidden;
+        border-radius: 28px;
+        background: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 30px 80px rgba(3, 7, 18, 0.55);
+        backdrop-filter: blur(18px);
+        border: 1px solid var(--line);
       }
 
-      .eyebrow {
-        text-transform: uppercase;
-        letter-spacing: 0.28em;
+      /* Top header (brand + progress) */
+      .topbar {
+        position: absolute;
+        inset: 18px 22px auto 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        z-index: 5;
+        pointer-events: none;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .logoDot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+      }
+
+      .brandName {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        opacity: 0.95;
+      }
+
+      .progressWrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        pointer-events: none;
+      }
+
+      .progressText {
         font-size: 12px;
         color: var(--muted);
       }
 
+      .progressBar {
+        width: 160px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.14);
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        overflow: hidden;
+      }
+
+      .progressFill {
+        height: 100%;
+        width: 0%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(96, 165, 250, 0.9), rgba(245, 158, 11, 0.9));
+        transition: width 0.6s ease;
+      }
+
+      .slides {
+        display: flex;
+        transition: transform 0.6s ease;
+      }
+
+      .slide {
+        min-width: 100%;
+        padding: 78px 72px 88px; /* extra top space for topbar */
+        display: grid;
+        gap: 22px;
+        align-content: center;
+        justify-items: start; /* keep stable; we stretch grids explicitly */
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 12px;
+        color: var(--accent);
+        font-weight: 700;
+      }
+
       h1 {
-        font-size: clamp(32px, 5vw, 48px);
-        margin: 16px 0 12px;
+        font-size: clamp(34px, 5vw, 58px);
+        margin: 0;
+        line-height: 1.03;
+        letter-spacing: -0.02em;
+        max-width: 18ch;
       }
 
       h2 {
-        font-size: clamp(22px, 3vw, 30px);
-        margin: 40px 0 12px;
+        font-size: clamp(26px, 4vw, 42px);
+        margin: 0;
+        letter-spacing: -0.02em;
+        max-width: 34ch;
       }
 
       p {
-        margin: 0 0 16px;
+        margin: 0;
         color: var(--muted);
+        font-size: clamp(16px, 2vw, 18px);
         line-height: 1.6;
-        font-size: 16px;
+        max-width: 70ch;
       }
 
-      .nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px 18px;
-        margin: 8px 0 20px;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-      }
-
-      .nav a {
-        color: var(--muted);
-        text-decoration: none;
-      }
-
-      .nav a:hover {
-        color: var(--text);
-      }
-
+      /* GLOBAL FIX: make all grids span full slide width */
       .grid {
+        width: 100%;
         display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 16px;
-        margin: 24px 0 32px;
+      }
+
+      /* Flow grid: prefer 4 columns on desktop, responsive down */
+      .grid.flow {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
       .card {
-        padding: 16px 18px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        background: rgba(14, 20, 29, 0.8);
+        padding: 18px 20px;
+        background: rgba(15, 23, 42, 0.85);
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        box-shadow: 0 10px 26px rgba(3, 7, 18, 0.25);
       }
 
-      .card strong {
-        color: var(--text);
+      .card.primary {
+        border-color: rgba(96, 165, 250, 0.55);
+        background: rgba(15, 23, 42, 0.95);
+        box-shadow: 0 16px 42px rgba(3, 7, 18, 0.42);
       }
 
-      .cta {
+      .metric {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .kicker {
+        font-size: 13px;
+        color: rgba(249, 250, 251, 0.9);
+        margin-top: 10px;
+      }
+
+      .tagRow {
         display: flex;
+        gap: 10px;
         flex-wrap: wrap;
+        width: 100%;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 14px;
+        background: rgba(96, 165, 250, 0.12);
+        color: var(--text);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+      }
+
+      .tag.alt {
+        background: rgba(245, 158, 11, 0.10);
+        border-color: rgba(245, 158, 11, 0.28);
+      }
+
+      /* CTA never stretches */
+      .cta {
+        display: inline-flex;
+        align-items: center;
         gap: 12px;
-        margin-top: 16px;
+        background: var(--accent);
+        color: #1f2937;
+        padding: 12px 20px;
+        border-radius: 999px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s ease, filter 0.2s ease;
+        width: fit-content;
+        justify-self: start;
+      }
+
+      .cta:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.02);
+      }
+
+      .cta.secondary {
+        background: rgba(15, 23, 42, 0.6);
+        color: var(--text);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+      }
+
+      .nav {
+        position: absolute;
+        inset: auto 32px 26px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+        z-index: 6;
+      }
+
+      .dots {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.4);
+        transition: transform 0.2s ease, background 0.2s ease;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      .dot.active {
+        background: var(--accent-2);
+        transform: scale(1.4);
+      }
+
+      .controls {
+        display: flex;
+        gap: 12px;
+        flex: 0 0 auto;
       }
 
       .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 18px;
-        border-radius: 10px;
-        border: 1px solid transparent;
-        text-decoration: none;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        color: #081018;
-        box-shadow: 0 12px 24px rgba(90, 211, 201, 0.25);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 16px 28px rgba(90, 211, 201, 0.35);
-      }
-
-      .btn-secondary {
-        background: rgba(16, 24, 35, 0.6);
-        border-color: var(--border);
+        background: rgba(15, 23, 42, 0.78);
         color: var(--text);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 999px;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.2s ease;
+        white-space: nowrap;
       }
 
-      .note {
+      .btn:hover {
+        background: rgba(96, 165, 250, 0.18);
+        transform: translateY(-1px);
+      }
+
+      .hint {
+        color: var(--muted);
         font-size: 13px;
-        color: var(--muted);
-        margin-top: 18px;
       }
 
-      .legal {
-        font-size: 14px;
-        color: #d7dee6;
-        margin-top: 12px;
-      }
-
-      .section {
-        margin-top: 32px;
-        padding-top: 12px;
-        border-top: 1px solid var(--border);
-      }
-
-      .list {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
-        line-height: 1.6;
-      }
-
-      .list li {
-        margin-bottom: 8px;
-      }
-
-      @media (min-width: 720px) {
-        .grid {
+      /* Better responsive behavior */
+      @media (max-width: 980px) {
+        .grid.flow {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 720px) {
+        .slide {
+          padding: 72px 22px 96px;
+        }
+
+        .topbar {
+          inset: 14px 16px auto 16px;
+        }
+
+        .progressBar {
+          width: 120px;
+        }
+
+        .nav {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+
+        .controls {
+          width: auto;
+          align-self: flex-end;
+        }
+
+        .grid.flow {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
   <body>
-    <main class="shell">
-      <div class="eyebrow">BluePeak HVAC AI</div>
-      <h1>HVAC diagnostic decision support for licensed technicians and service managers.</h1>
-      <p>
-        BluePeak turns field readings into structured observations, recommended tests, and clear
-        confidence and limitation notes, plus PDF and email-ready reports. It is not a DIY tool and
-        does not replace technician judgment.
-      </p>
-
-      <nav class="nav" aria-label="Page sections">
-        <a href="#outputs">What you get</a>
-        <a href="#how">How it works</a>
-        <a href="#inputs">What we need</a>
-      </nav>
-
-      <div class="grid">
-        <div class="card">
-          <strong>For professional HVAC use only.</strong>
-          <p class="legal">
-            This system is built for licensed technicians and does not replace on-site judgment or
-            code compliance.
-          </p>
+    <main class="deck" aria-live="polite">
+      <div class="topbar" aria-hidden="true">
+        <div class="brand">
+          <span class="logoDot"></span>
+          <span class="brandName">BluePeak</span>
         </div>
-        <div class="card">
-          <strong>Data-driven outputs.</strong>
-          <p class="legal">
-            Results depend on the completeness and accuracy of the field data provided by the
-            technician.
-          </p>
+        <div class="progressWrap">
+          <span class="progressText" id="progressText">1 / 6</span>
+          <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
         </div>
       </div>
 
-      <div class="cta">
-        <a class="btn btn-primary" href="https://bluepeak-api.vercel.app/">Technician Login</a>
-        <a class="btn btn-secondary" href="#how">How it works</a>
-        <a class="btn btn-secondary" href="mailto:info@bluepeakhvac.net">Questions or access</a>
-      </div>
+      <section class="slides" id="slides">
+        <!-- 1 -->
+        <article class="slide">
+          <span class="eyebrow">BluePeak HVAC AI</span>
+          <h1>Guided HVAC diagnostics that teach junior technicians how to think like seniors.</h1>
+          <p>Structured inputs, clear confidence levels, and manager-ready reports without replacing technician judgment.</p>
+          <p class="hint">Junior technicians often collect data without knowing what actually matters. BluePeak standardizes the diagnostic process used by senior techs.</p>
 
-      <p class="note">Private beta. Access is allowlisted by approved emails/domains.</p>
+          <div class="tagRow">
+            <a class="cta" href="mailto:info@bluepeakhvac.net">Start a guided case</a>
+            <span class="tag alt">Private beta. Access is allowlisted by approved emails/domains.</span>
+          </div>
+        </article>
 
-      <section class="section" id="outputs">
-        <h2>What you get</h2>
-        <div class="grid">
-          <div class="card">
-            <strong>Structured diagnostic output.</strong>
-            <p class="legal">Observations, recommended tests, and findings grouped by system.</p>
+        <!-- 2 -->
+        <article class="slide">
+          <span class="eyebrow">What you get</span>
+          <h2>Structured diagnostic output</h2>
+          <p>Observations, recommended tests, and findings grouped by system, not raw AI text.</p>
+          <div class="grid">
+            <div class="card primary">
+              <div class="metric">Confidence and limitations</div>
+              <p class="kicker">Every diagnosis includes a confidence level and explains what data is still needed.</p>
+            </div>
+            <div class="card">
+              <div class="metric">OEM-aware guidance</div>
+              <p class="kicker">Matched models use OEM ranges when available. Typical ranges are flagged when OEM data is not found.</p>
+            </div>
+            <div class="card">
+              <div class="metric">PDF and email-ready reports</div>
+              <p class="kicker">Clean summaries for internal handoff, service records, or customer communication.</p>
+            </div>
           </div>
-          <div class="card">
-            <strong>Confidence &amp; limitations.</strong>
-            <p class="legal">No firm conclusions when critical data is missing or inconsistent.</p>
+        </article>
+
+        <!-- 3 -->
+        <article class="slide">
+          <span class="eyebrow">How it works</span>
+          <h2>Create a case</h2>
+          <p>Select job type, add notes, and define the fault context.</p>
+          <div class="grid flow">
+            <div class="card primary">
+              <p class="metric">Enter equipment details and readings</p>
+              <p class="kicker">Nameplates and field measurements are captured manually or via OCR (plan-dependent).</p>
+            </div>
+            <div class="card">
+              <p class="metric">Generate analysis and reports</p>
+              <p class="kicker">The system evaluates inputs, explains confidence, and recommends next tests.</p>
+            </div>
           </div>
-          <div class="card">
-            <strong>OEM-aware guidance.</strong>
-            <p class="legal">Matched models get OEM ranges; otherwise typical ranges are flagged.</p>
+        </article>
+
+        <!-- 4 -->
+        <article class="slide">
+          <span class="eyebrow">What we need for reliable results</span>
+          <h2>To reach higher diagnostic confidence, senior technicians typically check:</h2>
+          <div class="grid">
+            <div class="card primary">
+              <div class="metric">Return and supply temperatures</div>
+              <p class="kicker">Or delta-T and ambient temps.</p>
+            </div>
+            <div class="card">
+              <div class="metric">Pressures, superheat, subcooling</div>
+              <p class="kicker">As applicable to the system.</p>
+            </div>
+            <div class="card">
+              <div class="metric">Fault codes</div>
+              <p class="kicker">System alerts and diagnostics.</p>
+            </div>
+            <div class="card">
+              <div class="metric">Airflow or static pressure</div>
+              <p class="kicker">Recommended for full confidence.</p>
+            </div>
           </div>
-          <div class="card">
-            <strong>PDF / email reports.</strong>
-            <p class="legal">Shareable summaries for internal handoff and documentation.</p>
+          <p>Missing inputs reduce confidence. This is how experienced technicians decide what to check next.</p>
+        </article>
+
+        <!-- 5 -->
+        <article class="slide">
+          <span class="eyebrow">Professional use notice</span>
+          <h2>For professional HVAC use only.</h2>
+          <p>BluePeak is designed to support licensed technicians and service managers. It does not replace on-site judgment, code compliance, or professional responsibility.</p>
+        </article>
+
+        <!-- 6 -->
+        <article class="slide">
+          <span class="eyebrow">CTA</span>
+          <h2>Start a guided case.</h2>
+          <div class="tagRow">
+            <a class="cta" href="mailto:info@bluepeakhvac.net">Start a guided case</a>
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Questions or access: contact us</a>
           </div>
+          <span class="hint">Private beta. Access is allowlisted by approved emails/domains.</span>
+        </article>
+      </section>
+
+      <div class="nav">
+        <div class="dots" id="dots"></div>
+        <div class="controls">
+          <button class="btn" type="button" id="prev">Anterior</button>
+          <button class="btn" type="button" id="next">Siguiente</button>
         </div>
-      </section>
-
-      <section class="section" id="how">
-        <h2>How it works</h2>
-        <ol class="list">
-          <li>Create a case.</li>
-          <li>Enter symptoms, equipment details, and readings.</li>
-          <li>Generate analysis and reports.</li>
-        </ol>
-      </section>
-
-      <section class="section" id="inputs">
-        <h2>What we need for reliable results</h2>
-        <ul class="list">
-          <li>Return/supply temps (or delta T) and ambient temps.</li>
-          <li>Pressures, superheat/subcooling (as applicable).</li>
-          <li>Fault codes.</li>
-          <li>Airflow/static pressure (recommended).</li>
-        </ul>
-        <p class="legal">
-          Missing critical inputs reduces confidence and prevents firm conclusions.
-        </p>
-      </section>
+      </div>
     </main>
+
+    <script>
+      const slides = document.getElementById("slides");
+      const dots = document.getElementById("dots");
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      const progressText = document.getElementById("progressText");
+      const progressFill = document.getElementById("progressFill");
+
+      const total = slides.children.length;
+      let index = 0;
+
+      function renderDots() {
+        dots.innerHTML = "";
+        for (let i = 0; i < total; i += 1) {
+          const dot = document.createElement("button");
+          dot.className = "dot" + (i === index ? " active" : "");
+          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+          dot.addEventListener("click", () => goTo(i));
+          dots.appendChild(dot);
+        }
+      }
+
+      function renderProgress() {
+        if (progressText) progressText.textContent = `${index + 1} / ${total}`;
+        if (progressFill) progressFill.style.width = `${((index + 1) / total) * 100}%`;
+      }
+
+      function goTo(nextIndex) {
+        index = (nextIndex + total) % total;
+        slides.style.transform = `translateX(-${index * 100}%)`;
+        renderDots();
+        renderProgress();
+      }
+
+      prev.addEventListener("click", () => goTo(index - 1));
+      next.addEventListener("click", () => goTo(index + 1));
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowRight") goTo(index + 1);
+        if (event.key === "ArrowLeft") goTo(index - 1);
+      });
+
+      renderDots();
+      renderProgress();
+    </script>
   </body>
 </html>
+
+
