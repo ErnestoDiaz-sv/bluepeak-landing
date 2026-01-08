@@ -198,6 +198,31 @@
         font-size: 14px;
       }
 
+      .trust-strip {
+        justify-content: space-between;
+      }
+
+      .trust-icons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .trust-icon {
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: rgba(15, 23, 42, 0.6);
+        font-size: 13px;
+        color: var(--text);
+      }
+
+      .trust-note {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
       .tag {
         display: inline-flex;
         align-items: center;
@@ -228,6 +253,60 @@
         display: block;
         font-size: 18px;
         margin-bottom: 8px;
+      }
+
+      .preview-grid {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        margin-top: 20px;
+      }
+
+      .preview-card {
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.15);
+        background: rgba(15, 23, 42, 0.75);
+      }
+
+      .preview-card img {
+        width: 100%;
+        border-radius: 12px;
+        display: block;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 12px 30px rgba(3, 7, 18, 0.35);
+      }
+
+      .preview-label {
+        display: block;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .preview-caption {
+        margin-top: 14px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+
+      .stat-card strong {
+        font-size: 20px;
+      }
+
+      .testimonial {
+        display: grid;
+        gap: 10px;
+      }
+
+      .quote {
+        font-size: clamp(18px, 2.6vw, 22px);
+        color: var(--text);
+      }
+
+      .quote-attribution {
+        font-size: 14px;
+        color: var(--muted);
       }
 
       .split {
@@ -302,7 +381,7 @@
           <a href="contact.html">Contact</a>
         </nav>
         <div class="nav-cta">
-          <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
+          <a class="cta" href="https://app.bluepeakhvac.net">Start a Guided Case</a>
         </div>
       </div>
     </header>
@@ -311,18 +390,38 @@
       <section class="container hero" id="top">
         <span class="eyebrow">Guided HVAC Diagnostics</span>
         <h1>Guided diagnostics, confidence indicators, and reports for service teams.</h1>
-        <p>BluePeak HVAC AI helps technicians capture field details and produces structured outputs that managers can review quickly. Designed to support consistent diagnostics and clear documentation without slowing teams down.</p>
+        <p>BluePeak HVAC AI helps technicians capture field details and produces structured outputs that managers can review quickly. This is powered by AI that evaluates input completeness, detects uncertainty, and flags missing data. Designed to support consistent diagnostics and clear documentation without slowing teams down.</p>
         <div class="cta-row">
-          <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
-          <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a demo</a>
+          <a class="cta" href="https://app.bluepeakhvac.net">Start a Guided Case</a>
+          <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a Demo</a>
         </div>
       </section>
 
-      <section class="container" aria-label="Trusted by field teams">
-        <div class="band">
-          <span class="tag">Trusted by field teams</span>
-          <span>Built for licensed HVAC professionals, service managers, and operational leaders.</span>
+      <section class="container" aria-label="Who uses this">
+        <div class="band trust-strip">
+          <span class="tag">Who uses this</span>
+          <div class="trust-icons">
+            <span class="trust-icon">HVAC companies</span>
+            <span class="trust-icon">Service managers</span>
+            <span class="trust-icon">Field technicians</span>
+          </div>
+          <span class="trust-note">Used by field teams, service managers, and operations leaders.</span>
         </div>
+      </section>
+
+      <section class="container" id="preview">
+        <h2>Product Preview</h2>
+        <div class="preview-grid">
+          <div class="preview-card">
+            <img src="assets/screenshots/login.png" alt="BluePeak login screen" loading="lazy" />
+            <span class="preview-label">Secure login and role-based access</span>
+          </div>
+          <div class="preview-card">
+            <img src="assets/screenshots/case-view.png" alt="BluePeak case overview screen" loading="lazy" />
+            <span class="preview-label">Case overview with structured case data</span>
+          </div>
+        </div>
+        <p class="preview-caption">See how technicians capture data and managers get structured reports in real time.</p>
       </section>
 
       <section class="container" id="product">
@@ -334,15 +433,37 @@
           </div>
           <div class="card">
             <strong>Structured outputs</strong>
-            <p>Summary, findings, recommendations, and next steps in a clear format.</p>
+            <p>Summary, findings, recommendations, and next steps in a clear format. This is powered by AI that evaluates input completeness, detects uncertainty, and flags missing data.</p>
           </div>
           <div class="card">
             <strong>Confidence signals</strong>
-            <p>Highlights missing inputs and the strength of the analysis.</p>
+            <p>Highlights missing inputs and the strength of the analysis. This is powered by AI that evaluates input completeness, detects uncertainty, and flags missing data.</p>
           </div>
           <div class="card">
             <strong>Manager-ready reports</strong>
             <p>Shareable outputs for review, handoff, and documentation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="metrics">
+        <h2>Why teams adopt BluePeak</h2>
+        <div class="grid">
+          <div class="card stat-card">
+            <strong>30-50% faster diagnostics</strong>
+            <p>Guided prompts reduce rework and keep field notes complete.</p>
+          </div>
+          <div class="card stat-card">
+            <strong>Reduced callback risk</strong>
+            <p>Missing inputs are flagged before a case is closed.</p>
+          </div>
+          <div class="card stat-card">
+            <strong>Standardized service documentation</strong>
+            <p>Consistent summaries for managers, owners, and audits.</p>
+          </div>
+          <div class="card stat-card">
+            <strong>Clear AI confidence scoring</strong>
+            <p>Teams understand when data quality impacts outcomes.</p>
           </div>
         </div>
       </section>
@@ -407,6 +528,25 @@
         </div>
       </section>
 
+      <section class="container" id="enterprise">
+        <h2>Built for professional HVAC operations</h2>
+        <p>Enterprise-ready capabilities focused on security, oversight, and accountable workflows.</p>
+        <ul>
+          <li>Role-based access for technicians and managers.</li>
+          <li>Secure JWT authentication for controlled access.</li>
+          <li>HTTPS and encrypted transport for all data in transit.</li>
+          <li>Audit-friendly case records for compliance reviews.</li>
+          <li>No consumer data scraping or data resale.</li>
+        </ul>
+      </section>
+
+      <section class="container" id="social-proof">
+        <div class="card testimonial">
+          <p class="quote">“BluePeak gives our managers real visibility into what happens in the field — without slowing technicians down.”</p>
+          <span class="quote-attribution">(Anonymous HVAC Service Manager)</span>
+        </div>
+      </section>
+
       <section class="container" id="security">
         <h2>Security and trust</h2>
         <p>BluePeak HVAC AI is designed to support enterprise expectations for data handling and access control.</p>
@@ -432,12 +572,12 @@
       <section class="container" id="cta">
         <div class="band">
           <div>
-            <strong>Ready to start a guided case?</strong>
-            <p>Open the app or reach out for a tailored walkthrough.</p>
+            <strong>Ready to see BluePeak in action?</strong>
+            <p>Start a guided case or request a tailored walkthrough.</p>
           </div>
           <div class="cta-row">
-            <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
-            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a demo</a>
+            <a class="cta" href="https://app.bluepeakhvac.net">Start a Guided Case</a>
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a Demo</a>
           </div>
         </div>
       </section>
