@@ -1,9 +1,24 @@
-﻿<!doctype html>
+﻿<!--
+  Updated from a slide deck to a standard landing page with navigation, trust sections,
+  enterprise-ready messaging, and clear CTAs to the app. Added new sections, footer, and
+  compliant metadata for sharing and discovery.
+-->
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BluePeak SaaS Deck</title>
+    <title>BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports</title>
+    <meta name="description" content="BluePeak HVAC AI provides guided diagnostics, structured outputs, and manager-ready reports for HVAC service teams." />
+    <link rel="canonical" href="https://bluepeakhvac.net/" />
+    <meta property="og:title" content="BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports" />
+    <meta property="og:description" content="Guided HVAC diagnostics with structured outputs and manager-ready reports for service teams." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bluepeakhvac.net/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports" />
+    <meta name="twitter:description" content="Guided HVAC diagnostics with structured outputs and manager-ready reports for service teams." />
+    <link rel="icon" href="/favicon.ico" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
 
@@ -29,40 +44,40 @@
           radial-gradient(900px 700px at 10% 90%, rgba(245, 158, 11, 0.12), transparent 60%),
           linear-gradient(135deg, var(--bg), var(--bg-2));
         min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
       }
 
-      .deck {
+      a { color: inherit; }
+
+      .container {
         width: min(1100px, 100%);
-        position: relative;
-        overflow: hidden;
-        border-radius: 28px;
-        background: rgba(15, 23, 42, 0.7);
-        box-shadow: 0 30px 80px rgba(3, 7, 18, 0.55);
-        backdrop-filter: blur(18px);
-        border: 1px solid var(--line);
+        margin: 0 auto;
+        padding: 0 24px;
       }
 
-      /* Top header (brand + progress) */
-      .topbar {
-        position: absolute;
-        inset: 18px 22px auto 22px;
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        background: rgba(11, 15, 26, 0.65);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-bar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        z-index: 5;
-        pointer-events: none;
+        padding: 18px 0;
+        gap: 16px;
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        pointer-events: none;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        text-decoration: none;
       }
 
       .logoDot {
@@ -73,54 +88,67 @@
         box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
       }
 
-      .brandName {
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: var(--text);
-        opacity: 0.95;
-      }
-
-      .progressWrap {
-        display: inline-flex;
+      .nav-links {
+        display: flex;
         align-items: center;
-        gap: 10px;
-        pointer-events: none;
+        gap: 18px;
+        font-size: 15px;
       }
 
-      .progressText {
-        font-size: 12px;
+      .nav-links a {
+        text-decoration: none;
         color: var(--muted);
       }
 
-      .progressBar {
-        width: 160px;
-        height: 8px;
+      .nav-links a:hover { color: var(--text); }
+
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--accent);
+        color: #1f2937;
+        padding: 10px 18px;
         border-radius: 999px;
-        background: rgba(148, 163, 184, 0.14);
-        border: 1px solid rgba(148, 163, 184, 0.18);
-        overflow: hidden;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s ease, filter 0.2s ease;
+        width: fit-content;
       }
 
-      .progressFill {
-        height: 100%;
-        width: 0%;
-        border-radius: 999px;
-        background: linear-gradient(90deg, rgba(96, 165, 250, 0.9), rgba(245, 158, 11, 0.9));
-        transition: width 0.6s ease;
+      .cta:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.02);
       }
 
-      .slides {
-        display: flex;
-        transition: transform 0.6s ease;
+      .cta.secondary {
+        background: rgba(15, 23, 42, 0.6);
+        color: var(--text);
+        border: 1px solid rgba(148, 163, 184, 0.22);
       }
 
-      .slide {
-        min-width: 100%;
-        padding: 78px 72px 88px; /* extra top space for topbar */
+      .menu-toggle {
+        display: none;
+        background: rgba(15, 23, 42, 0.6);
+        color: var(--text);
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      main { padding: 56px 0 72px; }
+
+      .hero {
         display: grid;
-        gap: 22px;
-        align-content: center;
-        justify-items: start; /* keep stable; we stretch grids explicitly */
+        gap: 18px;
+        align-items: center;
       }
 
       .eyebrow {
@@ -136,14 +164,13 @@
         margin: 0;
         line-height: 1.03;
         letter-spacing: -0.02em;
-        max-width: 18ch;
+        max-width: 20ch;
       }
 
       h2 {
         font-size: clamp(26px, 4vw, 42px);
-        margin: 0;
+        margin: 0 0 12px;
         letter-spacing: -0.02em;
-        max-width: 34ch;
       }
 
       p {
@@ -151,20 +178,42 @@
         color: var(--muted);
         font-size: clamp(16px, 2vw, 18px);
         line-height: 1.6;
-        max-width: 70ch;
       }
 
-      /* GLOBAL FIX: make all grids span full slide width */
+      section { padding: 64px 0; }
+
+      .band {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        padding: 18px 22px;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+      }
+
+      .band span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        background: rgba(96, 165, 250, 0.12);
+        color: var(--text);
+        border: 1px solid rgba(96, 165, 250, 0.3);
+      }
+
       .grid {
-        width: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 16px;
-      }
-
-      /* Flow grid: prefer 4 columns on desktop, responsive down */
-      .grid.flow {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       }
 
       .card {
@@ -175,360 +224,254 @@
         box-shadow: 0 10px 26px rgba(3, 7, 18, 0.25);
       }
 
-      .card.primary {
-        border-color: rgba(96, 165, 250, 0.55);
-        background: rgba(15, 23, 42, 0.95);
-        box-shadow: 0 16px 42px rgba(3, 7, 18, 0.42);
+      .card strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 8px;
       }
 
-      .metric {
-        font-size: 28px;
-        font-weight: 700;
-        letter-spacing: -0.01em;
+      .split {
+        display: grid;
+        gap: 24px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       }
 
-      .kicker {
-        font-size: 13px;
-        color: rgba(249, 250, 251, 0.9);
-        margin-top: 10px;
-      }
-
-      .tagRow {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        width: 100%;
-      }
-
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 14px;
-        border-radius: 999px;
-        font-size: 14px;
-        background: rgba(96, 165, 250, 0.12);
-        color: var(--text);
-        border: 1px solid rgba(96, 165, 250, 0.3);
-      }
-
-      .tag.alt {
-        background: rgba(245, 158, 11, 0.10);
-        border-color: rgba(245, 158, 11, 0.28);
-      }
-
-      /* CTA never stretches */
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        background: var(--accent);
-        color: #1f2937;
-        padding: 12px 20px;
-        border-radius: 999px;
-        font-weight: 700;
-        text-decoration: none;
-        transition: transform 0.2s ease, filter 0.2s ease;
-        width: fit-content;
-        justify-self: start;
-      }
-
-      .cta:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.02);
-      }
-
-      .cta.secondary {
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-      }
-
-      .nav {
-        position: absolute;
-        inset: auto 32px 26px 32px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        flex-wrap: wrap;
-        z-index: 6;
-      }
-
-      .dots {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: rgba(148, 163, 184, 0.4);
-        transition: transform 0.2s ease, background 0.2s ease;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-      }
-
-      .dot.active {
-        background: var(--accent-2);
-        transform: scale(1.4);
-      }
-
-      .controls {
-        display: flex;
-        gap: 12px;
-        flex: 0 0 auto;
-      }
-
-      .btn {
-        background: rgba(15, 23, 42, 0.78);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        border-radius: 999px;
-        padding: 10px 16px;
-        cursor: pointer;
-        transition: background 0.2s ease, transform 0.2s ease;
-        white-space: nowrap;
-      }
-
-      .btn:hover {
-        background: rgba(96, 165, 250, 0.18);
-        transform: translateY(-1px);
-      }
-
-      .hint {
+      ul {
+        margin: 0;
+        padding-left: 18px;
         color: var(--muted);
-        font-size: 13px;
+        line-height: 1.7;
       }
 
-      /* Better responsive behavior */
-      @media (max-width: 980px) {
-        .grid.flow {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 12px;
       }
 
-      @media (max-width: 720px) {
-        .slide {
-          padding: 72px 22px 96px;
-        }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 28px 0 40px;
+        background: rgba(11, 15, 26, 0.4);
+      }
 
-        .topbar {
-          inset: 14px 16px auto 16px;
-        }
+      .footer-links {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 14px;
+        color: var(--muted);
+      }
 
-        .progressBar {
-          width: 120px;
-        }
+      .footer-links a { text-decoration: none; }
 
-        .nav {
+      @media (max-width: 900px) {
+        .nav-bar { flex-wrap: wrap; }
+      }
+
+      @media (max-width: 760px) {
+        .menu-toggle { display: inline-flex; }
+        .nav-links {
+          display: none;
+          width: 100%;
           flex-direction: column;
           align-items: flex-start;
           gap: 12px;
+          padding-bottom: 6px;
         }
-
-        .controls {
-          width: auto;
-          align-self: flex-end;
-        }
-
-        .grid.flow {
-          grid-template-columns: 1fr;
-        }
+        .nav-links.open { display: flex; }
+        .nav-cta { width: 100%; }
       }
     </style>
   </head>
   <body>
-    <main class="deck" aria-live="polite">
-      <div class="topbar" aria-hidden="true">
-        <div class="brand">
+    <header>
+      <div class="container nav-bar">
+        <a class="brand" href="index.html">
           <span class="logoDot"></span>
-          <span class="brandName">BluePeak</span>
-        </div>
-        <div class="progressWrap">
-          <span class="progressText" id="progressText">1 / 6</span>
-          <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
+          <span>BluePeak HVAC AI</span>
+        </a>
+        <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+        <nav class="nav-links" id="navLinks">
+          <a href="#product">Product</a>
+          <a href="#how">How it works</a>
+          <a href="#security">Security</a>
+          <a href="#pricing">Pricing</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-cta">
+          <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
         </div>
       </div>
+    </header>
 
-      <section class="slides" id="slides">
-        <!-- 1 -->
-        <article class="slide">
-          <span class="eyebrow">BluePeak HVAC AI</span>
-          <h1>Guided HVAC Diagnostics for Real-World Service Teams</h1>
-          <p>Turn field data into clear, structured diagnostic insight for technicians and managers.</p>
-          <p class="hint">BluePeak guides teams through a structured diagnostic flow and provides manager-ready summaries.</p>
-
-          <div class="tagRow">
-            <a class="cta" href="mailto:info@bluepeakhvac.net">Start a Guided Case</a>
-          </div>
-        </article>
-
-        <!-- 2 -->
-        <article class="slide">
-          <span class="eyebrow">What BluePeak Does</span>
-          <h2>What BluePeak Does</h2>
-          <p>Structured diagnostic guidance and outputs for field teams.</p>
-          <div class="grid">
-            <div class="card primary">
-              <div class="metric">Guided diagnostic flow</div>
-              <p class="kicker">Guides technicians through a structured diagnostic flow.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Equipment and readings</div>
-              <p class="kicker">Captures nameplate details and field measurements.</p>
-            </div>
-            <div class="card">
-              <div class="metric">AI-assisted analysis</div>
-              <p class="kicker">Generates AI-assisted analysis and recommendations.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Confidence and missing inputs</div>
-              <p class="kicker">Shows confidence levels and missing inputs.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Manager-ready summaries</div>
-              <p class="kicker">Produces manager-ready summaries and reports.</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 3 -->
-        <article class="slide">
-          <span class="eyebrow">How it works</span>
-          <h2>How It Works</h2>
-          <p>Start a guided case, capture details, and review structured output.</p>
-          <div class="grid flow">
-            <div class="card primary">
-              <p class="metric">Start a guided case</p>
-              <p class="kicker">Create a new case and follow the step-by-step workflow.</p>
-            </div>
-            <div class="card">
-              <p class="metric">Enter equipment details and readings</p>
-              <p class="kicker">Capture model, serial, and key field data such as temperatures and pressures.</p>
-            </div>
-            <div class="card">
-              <p class="metric">Generate analysis</p>
-              <p class="kicker">BluePeak evaluates the inputs and produces structured findings and recommendations.</p>
-            </div>
-            <div class="card">
-              <p class="metric">Review confidence and next steps</p>
-              <p class="kicker">See how complete the data is and what additional information may be needed.</p>
-            </div>
-            <div class="card">
-              <p class="metric">Share a manager-ready report</p>
-              <p class="kicker">Send a clean, structured summary for internal handoff, documentation, or review.</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- 4 -->
-        <article class="slide">
-          <span class="eyebrow">Clear, Structured Output</span>
-          <h2>Clear, Structured Output</h2>
-          <div class="grid">
-            <div class="card primary">
-              <div class="metric">Summary</div>
-              <p class="kicker">High-level overview of the case.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Findings</div>
-              <p class="kicker">Structured results based on available inputs.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Recommendations</div>
-              <p class="kicker">Suggested next steps and actions.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Readings</div>
-              <p class="kicker">Captured equipment data and measurements.</p>
-            </div>
-            <div class="card">
-              <div class="metric">Next Steps</div>
-              <p class="kicker">What to do next based on data completeness.</p>
-            </div>
-          </div>
-          <p>BluePeak reports are organized into Summary, Findings, Recommendations, Readings, and Next Steps so teams can quickly understand what’s known, what’s missing, and what to do next.</p>
-        </article>
-
-        <!-- 5 -->
-        <article class="slide">
-          <span class="eyebrow">Built for Technicians and Managers</span>
-          <h2>Built for Technicians and Managers</h2>
-          <p>BluePeak supports both field technicians and service managers with shared visibility into case data, confidence levels, and diagnostic output.</p>
-          <p>BluePeak is designed for licensed HVAC professionals and service managers. It supports -- but does not replace -- on-site judgment, code compliance, or professional responsibility.</p>
-        </article>
-
-        <!-- 6 -->
-        <article class="slide">
-          <span class="eyebrow">CTA</span>
-          <h2>Start a Guided Case</h2>
-          <div class="tagRow">
-            <a class="cta" href="mailto:info@bluepeakhvac.net">Start a Guided Case</a>
-            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Questions? Contact us</a>
-          </div>
-          <span class="hint">Manager-ready summaries and reports for internal handoff, documentation, or review.</span>
-        </article>
+    <main>
+      <section class="container hero" id="top">
+        <span class="eyebrow">Guided HVAC Diagnostics</span>
+        <h1>Guided diagnostics, confidence indicators, and reports for service teams.</h1>
+        <p>BluePeak HVAC AI helps technicians capture field details and produces structured outputs that managers can review quickly. Designed to support consistent diagnostics and clear documentation without slowing teams down.</p>
+        <div class="cta-row">
+          <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
+          <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a demo</a>
+        </div>
       </section>
 
-      <div class="nav">
-        <div class="dots" id="dots"></div>
-        <div class="controls">
-          <button class="btn" type="button" id="prev">Previous</button>
-          <button class="btn" type="button" id="next">Next</button>
+      <section class="container" aria-label="Trusted by field teams">
+        <div class="band">
+          <span class="tag">Trusted by field teams</span>
+          <span>Built for licensed HVAC professionals, service managers, and operational leaders.</span>
         </div>
-      </div>
+      </section>
+
+      <section class="container" id="product">
+        <h2>What you get</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Guided diagnostic flow</strong>
+            <p>Consistent prompts for equipment details, readings, and observations.</p>
+          </div>
+          <div class="card">
+            <strong>Structured outputs</strong>
+            <p>Summary, findings, recommendations, and next steps in a clear format.</p>
+          </div>
+          <div class="card">
+            <strong>Confidence signals</strong>
+            <p>Highlights missing inputs and the strength of the analysis.</p>
+          </div>
+          <div class="card">
+            <strong>Manager-ready reports</strong>
+            <p>Shareable outputs for review, handoff, and documentation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="how">
+        <h2>How it works</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Start a guided case</strong>
+            <p>Open a new case and follow the step-by-step workflow.</p>
+          </div>
+          <div class="card">
+            <strong>Capture equipment data</strong>
+            <p>Record model, serial, and key measurements from the field.</p>
+          </div>
+          <div class="card">
+            <strong>Generate analysis</strong>
+            <p>BluePeak produces structured findings and recommendations.</p>
+          </div>
+          <div class="card">
+            <strong>Review and share</strong>
+            <p>Deliver a clean summary for internal review or documentation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="outputs">
+        <h2>Outputs teams can use immediately</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Summary</strong>
+            <p>High-level overview of the case and key context.</p>
+          </div>
+          <div class="card">
+            <strong>Findings</strong>
+            <p>Structured results based on available inputs.</p>
+          </div>
+          <div class="card">
+            <strong>Recommendations</strong>
+            <p>Suggested next steps aligned to the case data.</p>
+          </div>
+          <div class="card">
+            <strong>Readings</strong>
+            <p>Captured measurements and equipment details.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="teams">
+        <h2>For technicians and managers</h2>
+        <div class="split">
+          <div class="card">
+            <strong>Technicians</strong>
+            <p>Guided data capture and clear prompts to keep work consistent in the field.</p>
+            <p>Designed to support, not replace, professional judgment and code compliance.</p>
+          </div>
+          <div class="card">
+            <strong>Managers</strong>
+            <p>Visibility into case quality, completeness, and recommendations.</p>
+            <p>Structured outputs for internal review, training, and documentation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="security">
+        <h2>Security and trust</h2>
+        <p>BluePeak HVAC AI is designed to support enterprise expectations for data handling and access control.</p>
+        <ul>
+          <li>Data handling is designed to support least-privilege access by role.</li>
+          <li>Authentication uses token-based access (JWT) to limit exposure of credentials.</li>
+          <li>Activity is designed to be auditable with structured logs for review.</li>
+          <li>Encryption in transit (HTTPS) protects data between users and the app.</li>
+          <li>No credential sharing; each user authenticates with their own account.</li>
+        </ul>
+      </section>
+
+      <section class="container" id="pricing">
+        <h2>Pricing</h2>
+        <div class="card">
+          <p>Enterprise pricing is based on team size and workflow needs. Contact us to discuss licensing, onboarding, and support.</p>
+          <div class="cta-row">
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request pricing</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="container" id="cta">
+        <div class="band">
+          <div>
+            <strong>Ready to start a guided case?</strong>
+            <p>Open the app or reach out for a tailored walkthrough.</p>
+          </div>
+          <div class="cta-row">
+            <a class="cta" href="https://app.bluepeakhvac.net">Open the App</a>
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a demo</a>
+          </div>
+        </div>
+      </section>
     </main>
 
+    <footer>
+      <div class="container">
+        <div class="split">
+          <div>
+            <strong>BluePeak HVAC AI</strong>
+            <p>Guided diagnostics and reports for HVAC service teams.</p>
+            <p>Contact: <a href="mailto:info@bluepeakhvac.net">info@bluepeakhvac.net</a></p>
+          </div>
+          <div class="footer-links">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="security.html">Security</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <script>
-      const slides = document.getElementById("slides");
-      const dots = document.getElementById("dots");
-      const prev = document.getElementById("prev");
-      const next = document.getElementById("next");
-      const progressText = document.getElementById("progressText");
-      const progressFill = document.getElementById("progressFill");
+      const toggle = document.getElementById("menuToggle");
+      const nav = document.getElementById("navLinks");
 
-      const total = slides.children.length;
-      let index = 0;
-
-      function renderDots() {
-        dots.innerHTML = "";
-        for (let i = 0; i < total; i += 1) {
-          const dot = document.createElement("button");
-          dot.className = "dot" + (i === index ? " active" : "");
-          dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
-          dot.addEventListener("click", () => goTo(i));
-          dots.appendChild(dot);
-        }
+      if (toggle && nav) {
+        toggle.addEventListener("click", () => {
+          const isOpen = nav.classList.toggle("open");
+          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
       }
-
-      function renderProgress() {
-        if (progressText) progressText.textContent = `${index + 1} / ${total}`;
-        if (progressFill) progressFill.style.width = `${((index + 1) / total) * 100}%`;
-      }
-
-      function goTo(nextIndex) {
-        index = (nextIndex + total) % total;
-        slides.style.transform = `translateX(-${index * 100}%)`;
-        renderDots();
-        renderProgress();
-      }
-
-      prev.addEventListener("click", () => goTo(index - 1));
-      next.addEventListener("click", () => goTo(index + 1));
-
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowRight") goTo(index + 1);
-        if (event.key === "ArrowLeft") goTo(index - 1);
-      });
-
-      renderDots();
-      renderProgress();
     </script>
   </body>
 </html>
-
-
