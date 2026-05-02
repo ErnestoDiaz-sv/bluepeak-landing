@@ -1,611 +1,239 @@
-﻿<!--
-  Updated from a slide deck to a standard landing page with navigation, trust sections,
-  enterprise-ready messaging, and clear CTAs to the app. Added new sections, footer, and
-  compliant metadata for sharing and discovery.
+<!--
+  Redesigned 2026-05 -- app is now live with Stripe billing.
+  Removed pilot-program framing. All primary CTAs link to the live app.
+  Added real pricing section ($29/month, 5 free analyses).
 -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports</title>
-    <meta name="description" content="BluePeak HVAC AI provides guided diagnostics, structured outputs, and manager-ready reports for HVAC service teams." />
+    <title>BluePeak HVAC AI -- Guided Diagnostics for HVAC Technicians</title>
+    <meta name="description" content="BluePeak HVAC AI provides guided diagnostics backed by your OEM manuals, structured confidence levels, and step-by-step field tests for HVAC service teams." />
     <link rel="canonical" href="https://bluepeakhvac.net/" />
-    <meta property="og:title" content="BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports" />
-    <meta property="og:description" content="Guided HVAC diagnostics with structured outputs and manager-ready reports for service teams." />
+    <meta property="og:title" content="BluePeak HVAC AI -- Guided Diagnostics for HVAC Technicians" />
+    <meta property="og:description" content="Diagnose HVAC equipment faster with AI-guided analysis backed by OEM service manuals." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bluepeakhvac.net/" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="BluePeak HVAC AI — Guided Diagnostics, Confidence & Reports" />
-    <meta name="twitter:description" content="Guided HVAC diagnostics with structured outputs and manager-ready reports for service teams." />
     <link rel="icon" href="/favicon.ico" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
-
-      :root {
-        --bg: #0b0f1a;
-        --bg-2: #111827;
-        --accent: #f59e0b;
-        --accent-2: #60a5fa;
-        --text: #f9fafb;
-        --muted: #9ca3af;
-        --card: #0f172a;
-        --line: rgba(148, 163, 184, 0.18);
-      }
-
-      * { box-sizing: border-box; }
-
-      body {
-        margin: 0;
-        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(1200px 800px at 80% 10%, rgba(96, 165, 250, 0.15), transparent 60%),
-          radial-gradient(900px 700px at 10% 90%, rgba(245, 158, 11, 0.12), transparent 60%),
-          linear-gradient(135deg, var(--bg), var(--bg-2));
-        min-height: 100vh;
-      }
-
-      a { color: inherit; }
-
-      .container {
-        width: min(1100px, 100%);
-        margin: 0 auto;
-        padding: 0 24px;
-      }
-
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        backdrop-filter: blur(18px);
-        background: rgba(11, 15, 26, 0.65);
-        border-bottom: 1px solid var(--line);
-      }
-
-      .nav-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 0;
-        gap: 16px;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        text-decoration: none;
-      }
-
-      .logoDot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        font-size: 15px;
-      }
-
-      .nav-links a {
-        text-decoration: none;
-        color: var(--muted);
-      }
-
-      .nav-links a:hover { color: var(--text); }
-
-      .nav-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        background: var(--accent);
-        color: #1f2937;
-        padding: 10px 18px;
-        border-radius: 999px;
-        font-weight: 700;
-        text-decoration: none;
-        transition: transform 0.2s ease, filter 0.2s ease;
-        width: fit-content;
-      }
-
-      .cta:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.02);
-      }
-
-      .cta.secondary {
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-      }
-
-      .menu-toggle {
-        display: none;
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        padding: 8px 12px;
-        border-radius: 10px;
-        cursor: pointer;
-      }
-
-      main { padding: 56px 0 72px; }
-
-      .hero {
-        display: grid;
-        gap: 18px;
-        align-items: center;
-      }
-
-      .eyebrow {
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        font-size: 12px;
-        color: var(--accent);
-        font-weight: 700;
-      }
-
-      h1 {
-        font-size: clamp(34px, 5vw, 58px);
-        margin: 0;
-        line-height: 1.03;
-        letter-spacing: -0.02em;
-        max-width: 20ch;
-      }
-
-      h2 {
-        font-size: clamp(26px, 4vw, 42px);
-        margin: 0 0 12px;
-        letter-spacing: -0.02em;
-      }
-
-      p {
-        margin: 0;
-        color: var(--muted);
-        font-size: clamp(16px, 2vw, 18px);
-        line-height: 1.6;
-      }
-
-      section { padding: 64px 0; }
-
-      .band {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        padding: 18px 22px;
-        border-radius: 16px;
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(148, 163, 184, 0.15);
-      }
-
-      .band span {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .trust-strip {
-        justify-content: space-between;
-      }
-
-      .trust-icons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .trust-icon {
-        padding: 6px 12px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        background: rgba(15, 23, 42, 0.6);
-        font-size: 13px;
-        color: var(--text);
-      }
-
-      .trust-note {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 13px;
-        background: rgba(96, 165, 250, 0.12);
-        color: var(--text);
-        border: 1px solid rgba(96, 165, 250, 0.3);
-      }
-
-      .grid {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-
-      .card {
-        padding: 18px 20px;
-        background: rgba(15, 23, 42, 0.85);
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        box-shadow: 0 10px 26px rgba(3, 7, 18, 0.25);
-      }
-
-      .card strong {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 8px;
-      }
-
-      .preview-grid {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        margin-top: 20px;
-      }
-
-      .preview-card {
-        padding: 14px;
-        border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: rgba(15, 23, 42, 0.75);
-      }
-
-      .preview-card img {
-        width: 100%;
-        border-radius: 12px;
-        display: block;
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        box-shadow: 0 12px 30px rgba(3, 7, 18, 0.35);
-      }
-
-      .preview-label {
-        display: block;
-        margin-top: 10px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .preview-caption {
-        margin-top: 14px;
-        font-size: 15px;
-        color: var(--muted);
-      }
-
-      .stat-card strong {
-        font-size: 20px;
-      }
-
-      .testimonial {
-        display: grid;
-        gap: 10px;
-      }
-
-      .quote {
-        font-size: clamp(18px, 2.6vw, 22px);
-        color: var(--text);
-      }
-
-      .quote-attribution {
-        font-size: 14px;
-        color: var(--muted);
-      }
-
-      .split {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .cta-row {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
-
-      footer {
-        border-top: 1px solid var(--line);
-        padding: 28px 0 40px;
-        background: rgba(11, 15, 26, 0.4);
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 18px;
-        flex-wrap: wrap;
-        font-size: 14px;
-        color: var(--muted);
-      }
-
-      .footer-links a { text-decoration: none; }
-
-      @media (max-width: 900px) {
-        .nav-bar { flex-wrap: wrap; }
-      }
-
-      @media (max-width: 760px) {
-        .menu-toggle { display: inline-flex; }
-        .nav-links {
-          display: none;
-          width: 100%;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          padding-bottom: 6px;
-        }
-        .nav-links.open { display: flex; }
-        .nav-cta { width: 100%; }
-      }
+      :root { --bg:#0b0f1a; --bg-2:#111827; --accent:#f59e0b; --accent-2:#60a5fa; --text:#f9fafb; --muted:#9ca3af; --card:#0f172a; --line:rgba(148,163,184,0.18); }
+      * { box-sizing:border-box; }
+      body { margin:0; font-family:"Space Grotesk",system-ui,sans-serif; color:var(--text); background:radial-gradient(1200px 800px at 80% 10%,rgba(96,165,250,0.15),transparent 60%),radial-gradient(900px 700px at 10% 90%,rgba(245,158,11,0.12),transparent 60%),linear-gradient(135deg,var(--bg),var(--bg-2)); min-height:100vh; }
+      a { color:inherit; }
+      .container { width:min(1100px,100%); margin:0 auto; padding:0 24px; }
+      header { position:sticky; top:0; z-index:10; backdrop-filter:blur(18px); background:rgba(11,15,26,0.65); border-bottom:1px solid var(--line); }
+      .nav-bar { display:flex; align-items:center; justify-content:space-between; padding:18px 0; gap:16px; }
+      .brand { display:inline-flex; align-items:center; gap:10px; font-weight:700; letter-spacing:-0.02em; text-decoration:none; }
+      .logoDot { width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 0 3px rgba(96,165,250,0.18); }
+      .nav-links { display:flex; align-items:center; gap:18px; font-size:15px; }
+      .nav-links a { text-decoration:none; color:var(--muted); }
+      .nav-links a:hover { color:var(--text); }
+      .nav-cta { display:inline-flex; align-items:center; gap:12px; }
+      .cta { display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#1f2937; padding:11px 22px; border-radius:999px; font-weight:700; font-size:15px; text-decoration:none; transition:transform 0.2s ease,filter 0.2s ease; width:fit-content; }
+      .cta:hover { transform:translateY(-2px); filter:brightness(1.05); }
+      .cta.secondary { background:rgba(15,23,42,0.6); color:var(--text); border:1px solid rgba(148,163,184,0.22); }
+      .cta.outline { background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
+      .cta.outline:hover { background:rgba(245,158,11,0.08); }
+      .menu-toggle { display:none; background:rgba(15,23,42,0.6); color:var(--text); border:1px solid rgba(148,163,184,0.22); padding:8px 12px; border-radius:10px; cursor:pointer; }
+      main { padding:56px 0 72px; }
+      .hero { display:grid; gap:20px; align-items:center; max-width:720px; }
+      .eyebrow { text-transform:uppercase; letter-spacing:0.18em; font-size:12px; color:var(--accent); font-weight:700; }
+      h1 { font-size:clamp(34px,5vw,60px); margin:0; line-height:1.03; letter-spacing:-0.02em; }
+      h2 { font-size:clamp(26px,4vw,42px); margin:0 0 12px; letter-spacing:-0.02em; }
+      p { margin:0; color:var(--muted); font-size:clamp(16px,2vw,18px); line-height:1.6; }
+      section { padding:64px 0; }
+      .band { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:18px 22px; border-radius:16px; background:rgba(15,23,42,0.7); border:1px solid rgba(148,163,184,0.15); }
+      .trust-strip { justify-content:space-between; }
+      .trust-icons { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+      .trust-icon { padding:6px 12px; border-radius:999px; border:1px solid rgba(148,163,184,0.22); background:rgba(15,23,42,0.6); font-size:13px; color:var(--text); }
+      .tag { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; font-size:13px; background:rgba(96,165,250,0.12); color:var(--text); border:1px solid rgba(96,165,250,0.3); }
+      .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+      .card { padding:20px 22px; background:rgba(15,23,42,0.85); border-radius:18px; border:1px solid rgba(148,163,184,0.15); box-shadow:0 10px 26px rgba(3,7,18,0.25); }
+      .card strong { display:block; font-size:17px; margin-bottom:8px; }
+      .steps { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); counter-reset:steps; }
+      .step-card { padding:20px 22px; background:rgba(15,23,42,0.85); border-radius:18px; border:1px solid rgba(148,163,184,0.15); counter-increment:steps; position:relative; }
+      .step-card::before { content:counter(steps); position:absolute; top:20px; right:20px; font-size:28px; font-weight:700; color:rgba(245,158,11,0.15); line-height:1; }
+      .step-card strong { display:block; font-size:17px; margin-bottom:8px; }
+      .preview-grid { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:20px; }
+      .preview-card { padding:14px; border-radius:16px; border:1px solid rgba(148,163,184,0.15); background:rgba(15,23,42,0.75); }
+      .preview-card img { width:100%; border-radius:12px; display:block; border:1px solid rgba(148,163,184,0.2); box-shadow:0 12px 30px rgba(3,7,18,0.35); }
+      .preview-label { display:block; margin-top:10px; color:var(--muted); font-size:13px; }
+      .pricing-grid { display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); margin-top:32px; }
+      .pricing-card { padding:28px 26px; background:rgba(15,23,42,0.85); border-radius:22px; border:1px solid rgba(148,163,184,0.15); display:flex; flex-direction:column; gap:16px; }
+      .pricing-card.featured { border-color:rgba(245,158,11,0.4); background:rgba(245,158,11,0.05); }
+      .price-label { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+      .price-label.amber { color:var(--accent); }
+      .price-amount { font-size:48px; font-weight:700; letter-spacing:-0.03em; line-height:1; color:var(--text); }
+      .price-amount sup { font-size:22px; vertical-align:super; letter-spacing:0; }
+      .price-period { font-size:16px; font-weight:400; color:var(--muted); }
+      .price-desc { color:var(--muted); font-size:15px; line-height:1.5; margin:0; }
+      .price-features { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+      .price-features li { display:flex; align-items:flex-start; gap:8px; font-size:14px; color:var(--muted); line-height:1.4; }
+      .price-features li .check { color:var(--accent); flex-shrink:0; margin-top:1px; }
+      .testimonial { display:grid; gap:10px; }
+      .quote { font-size:clamp(18px,2.6vw,22px); color:var(--text); font-style:italic; }
+      .quote-attribution { font-size:14px; color:var(--muted); }
+      .split { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+      ul { margin:0; padding-left:18px; color:var(--muted); line-height:1.7; }
+      .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+      footer { border-top:1px solid var(--line); padding:28px 0 40px; background:rgba(11,15,26,0.4); }
+      .footer-links { display:flex; gap:18px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
+      .footer-links a { text-decoration:none; }
+      .footer-links a:hover { color:var(--text); }
+      @media (max-width:900px) { .nav-bar { flex-wrap:wrap; } }
+      @media (max-width:760px) { .menu-toggle { display:inline-flex; } .nav-links { display:none; width:100%; flex-direction:column; align-items:flex-start; gap:12px; padding-bottom:6px; } .nav-links.open { display:flex; } .nav-cta { width:100%; } }
     </style>
   </head>
   <body>
     <header>
       <div class="container nav-bar">
-        <a class="brand" href="index.html">
-          <span class="logoDot"></span>
-          <span>BluePeak HVAC AI</span>
-        </a>
+        <a class="brand" href="index.html"><span class="logoDot"></span><span>BluePeak HVAC AI</span></a>
         <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
         <nav class="nav-links" id="navLinks">
-          <a href="#product">Product</a>
+          <a href="#product">Features</a>
           <a href="#how">How it works</a>
+          <a href="#pricing">Pricing</a>
           <a href="#security">Security</a>
-          <a href="#pricing">Pilot Program</a>
           <a href="about.html">About</a>
           <a href="contact.html">Contact</a>
         </nav>
         <div class="nav-cta">
-          <a class="cta" href="mailto:info@bluepeakhvac.net">Apply for Pilot Access</a>
+          <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Launch App &rarr;</a>
         </div>
       </div>
     </header>
-
     <main>
-      <section class="container hero" id="top">
-        <span class="eyebrow">Guided HVAC Diagnostics</span>
-        <h1>Reduce HVAC callbacks with guided diagnostics and confidence gates.</h1>
-        <p>Now enrolling a limited number of HVAC teams in an exclusive paid pilot program.</p>
-        <p>BluePeak HVAC AI helps technicians capture field details while managers get structured, review-ready outputs. Confidence gates highlight missing inputs and uncertainty so leaders can protect quality and reduce rework without disrupting field pace.</p>
-        <div class="cta-row">
-          <a class="cta" href="mailto:info@bluepeakhvac.net">Apply for Pilot Access</a>
-          <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a Demo</a>
+      <section class="container" id="top">
+        <div class="hero">
+          <span class="eyebrow">Guided HVAC Diagnostics &middot; Powered by AI</span>
+          <h1>Stop guessing. Start diagnosing with confidence.</h1>
+          <p>Upload your OEM service manual. Describe what you&apos;re seeing. BluePeak gives you ranked hypotheses, exact page citations, and step-by-step field tests &mdash; so every call ends with a clear answer, not a callback.</p>
+          <div class="cta-row">
+            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Try it free &rarr;</a>
+            <a class="cta secondary" href="#pricing">See pricing</a>
+          </div>
+          <p style="font-size:14px;margin-top:4px;">5 free analyses &mdash; no credit card required.</p>
         </div>
-        <p class="preview-caption">Pilot access is limited and reviewed to ensure fit.</p>
       </section>
-
       <section class="container" aria-label="Who uses this">
         <div class="band trust-strip">
           <span class="tag">Who uses this</span>
           <div class="trust-icons">
-            <span class="trust-icon">HVAC companies</span>
-            <span class="trust-icon">Service managers</span>
-            <span class="trust-icon">Field technicians</span>
+            <span class="trust-icon">&#128295; Field technicians</span>
+            <span class="trust-icon">&#128203; Service managers</span>
+            <span class="trust-icon">&#127970; HVAC companies</span>
           </div>
-          <span class="trust-note">Used by field teams, service managers, and operations leaders.</span>
+          <span style="color:var(--muted);font-size:14px;">Diagnose faster. Document everything. Reduce callbacks.</span>
         </div>
       </section>
-
       <section class="container" id="preview">
-        <h2>Product Preview</h2>
+        <h2>Built for the field</h2>
+        <p>A clean, mobile-friendly interface technicians can use on-site &mdash; and managers can review from the office.</p>
         <div class="preview-grid">
-          <div class="preview-card">
-            <img src="assets/screenshots/login.png" alt="BluePeak login screen" loading="lazy" />
-            <span class="preview-label">Secure login and role-based access</span>
-          </div>
-          <div class="preview-card">
-            <img src="assets/screenshots/case-view.png" alt="BluePeak case overview screen" loading="lazy" />
-            <span class="preview-label">Case overview with structured case data</span>
-          </div>
+          <div class="preview-card"><img src="assets/screenshots/login.png" alt="BluePeak secure login screen" loading="lazy" /><span class="preview-label">Secure login &mdash; each tech has their own account</span></div>
+          <div class="preview-card"><img src="assets/screenshots/case-view.png" alt="BluePeak case view with hypotheses and field tests" loading="lazy" /><span class="preview-label">Ranked hypotheses with manual citations and field steps</span></div>
         </div>
-        <p class="preview-caption">See how technicians capture data and managers get structured reports in real time.</p>
       </section>
-
       <section class="container" id="product">
-        <h2>What you get</h2>
+        <h2>Everything you need on a service call</h2>
         <div class="grid">
-          <div class="card">
-            <strong>Guided diagnostic flow</strong>
-            <p>Consistent prompts for equipment details, readings, and observations.</p>
-          </div>
-          <div class="card">
-            <strong>Structured outputs</strong>
-            <p>Summary, findings, recommendations, and next steps in a clear format. This is powered by AI that evaluates input completeness, detects uncertainty, and flags missing data.</p>
-          </div>
-          <div class="card">
-            <strong>Confidence signals</strong>
-            <p>Highlights missing inputs and the strength of the analysis. This is powered by AI that evaluates input completeness, detects uncertainty, and flags missing data.</p>
-          </div>
-          <div class="card">
-            <strong>Manager-ready reports</strong>
-            <p>Shareable outputs for review, handoff, and documentation.</p>
-          </div>
+          <div class="card"><strong>&#128269; OEM-backed analysis</strong><p>Upload the service manual once. Every hypothesis links to the exact page, section, and reference value from the manufacturer.</p></div>
+          <div class="card"><strong>&#128202; Confidence levels</strong><p>Each hypothesis is rated CONFIRMED, SUPPORTED, POSSIBLE, or SPECULATIVE &mdash; so you know how solid the diagnosis is before you pull a part.</p></div>
+          <div class="card"><strong>&#128295; Step-by-step field tests</strong><p>Not just &ldquo;what to test&rdquo; &mdash; exact steps, required tools, and pass/fail reference values straight from the manual.</p></div>
+          <div class="card"><strong>&#128204; Missing data flags</strong><p>BluePeak tells you which readings it needs to raise confidence, so you know what to measure before you leave the unit.</p></div>
+          <div class="card"><strong>&#128193; Persistent case records</strong><p>Every case is saved with the full analysis. Come back later or hand off to another tech without losing context.</p></div>
+          <div class="card"><strong>&#9989; Resolve or escalate</strong><p>Close a case as resolved or unresolved when the job is done. Keep your service history clean and auditable.</p></div>
         </div>
       </section>
-
-      <section class="container" id="metrics">
-        <h2>Why teams adopt BluePeak</h2>
-        <div class="grid">
-          <div class="card stat-card">
-            <strong>Fewer callbacks and rework</strong>
-            <p>Guided prompts keep field notes complete before cases are closed.</p>
-          </div>
-          <div class="card stat-card">
-            <strong>Confidence gates before closeout</strong>
-            <p>Missing inputs and uncertainty are flagged for manager review.</p>
-          </div>
-          <div class="card stat-card">
-            <strong>Standardized service documentation</strong>
-            <p>Consistent summaries for managers, owners, and audits.</p>
-          </div>
-          <div class="card stat-card">
-            <strong>Technical confidence visibility</strong>
-            <p>Leaders see when data quality impacts case decisions.</p>
-          </div>
-        </div>
-      </section>
-
       <section class="container" id="how">
         <h2>How it works</h2>
-        <div class="grid">
-          <div class="card">
-            <strong>Start a guided case</strong>
-            <p>Open a new case and follow the step-by-step workflow.</p>
-          </div>
-          <div class="card">
-            <strong>Capture equipment data</strong>
-            <p>Record model, serial, and key measurements from the field.</p>
-          </div>
-          <div class="card">
-            <strong>Generate a structured draft</strong>
-            <p>BluePeak drafts findings and recommendations for review.</p>
-          </div>
-          <div class="card">
-            <strong>Review and share</strong>
-            <p>Deliver a clean summary for internal review or documentation.</p>
-          </div>
+        <p>Three steps from the service call to a clear answer.</p>
+        <div class="steps" style="margin-top:24px;">
+          <div class="step-card"><strong>Start a case</strong><p>Enter the equipment brand, model, and what you&apos;re observing &mdash; high suction, low delta-T, locked compressor, whatever the complaint is.</p></div>
+          <div class="step-card"><strong>Upload the service manual</strong><p>Drop in the OEM PDF. BluePeak indexes it and uses it to back every finding with a manual citation. Skip this step if you don&apos;t have it.</p></div>
+          <div class="step-card"><strong>Get ranked hypotheses + tests</strong><p>BluePeak returns a prioritized list of root causes, the evidence level for each, and the exact field tests to confirm or rule them out.</p></div>
+          <div class="step-card"><strong>Resolve and document</strong><p>Mark the case resolved. The full analysis is saved to your case history for review, handoff, or callbacks.</p></div>
         </div>
       </section>
-
-      <section class="container" id="outputs">
-        <h2>Outputs teams can use immediately</h2>
-        <div class="grid">
-          <div class="card">
-            <strong>Summary</strong>
-            <p>High-level overview of the case and key context.</p>
+      <section class="container" id="pricing">
+        <h2>Simple, flat pricing</h2>
+        <p>Start free. Subscribe when you&apos;re ready. No per-seat fees, no hidden limits.</p>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div><p class="price-label">Free Trial</p><div class="price-amount"><sup>$</sup>0</div></div>
+            <p class="price-desc">Try it on real calls. No credit card needed.</p>
+            <ul class="price-features">
+              <li><span class="check">&#10003;</span> 5 full analyses included</li>
+              <li><span class="check">&#10003;</span> OEM manual upload &amp; indexing</li>
+              <li><span class="check">&#10003;</span> Confidence levels + field steps</li>
+              <li><span class="check">&#10003;</span> Case history saved</li>
+            </ul>
+            <a class="cta outline" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener" style="margin-top:4px;">Start free &rarr;</a>
           </div>
-          <div class="card">
-            <strong>Findings</strong>
-            <p>Structured results based on available inputs.</p>
-          </div>
-          <div class="card">
-            <strong>Recommendations</strong>
-            <p>Suggested next steps aligned to the case data.</p>
-          </div>
-          <div class="card">
-            <strong>Readings</strong>
-            <p>Captured measurements and equipment details.</p>
+          <div class="pricing-card featured">
+            <div><p class="price-label amber">Pro &middot; Monthly</p><div class="price-amount"><sup>$</sup>29<span class="price-period">/mo</span></div></div>
+            <p class="price-desc">Unlimited diagnoses for one user. Cancel any time.</p>
+            <ul class="price-features">
+              <li><span class="check">&#10003;</span> <strong style="color:var(--text);">Unlimited</strong> analyses</li>
+              <li><span class="check">&#10003;</span> Everything in the free trial</li>
+              <li><span class="check">&#10003;</span> Priority support</li>
+              <li><span class="check">&#10003;</span> Cancel any time &mdash; no contracts</li>
+            </ul>
+            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener" style="margin-top:4px;">Get started &rarr;</a>
           </div>
         </div>
+        <p style="font-size:13px;margin-top:20px;color:var(--muted);">Need a team plan? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);text-decoration:none;">Contact us</a>.</p>
       </section>
-
       <section class="container" id="teams">
         <h2>For technicians and managers</h2>
         <div class="split">
-          <div class="card">
-            <strong>Technicians</strong>
-            <p>Guided data capture and clear prompts to keep work consistent in the field.</p>
-            <p>Designed to support, not replace, professional judgment and code compliance.</p>
-          </div>
-          <div class="card">
-            <strong>Managers</strong>
-            <p>Visibility into case quality, completeness, and recommendations.</p>
-            <p>Structured outputs for internal review, training, and documentation.</p>
-          </div>
+          <div class="card"><strong>&#128295; Technicians</strong><p>Follow structured prompts, get clear next steps, and back every decision with a manual citation &mdash; even on unfamiliar equipment.</p><p style="margin-top:10px;">Designed to support professional judgment, not replace it.</p></div>
+          <div class="card"><strong>&#128203; Managers</strong><p>See confidence levels and missing data flags for every case. Know when a diagnosis is solid and when it needs more field data.</p><p style="margin-top:10px;">Structured case records for training, QA, and documentation.</p></div>
         </div>
       </section>
-
-      <section class="container" id="enterprise">
-        <h2>Built for professional HVAC operations</h2>
-        <p>Enterprise-ready capabilities focused on security, oversight, and accountable workflows.</p>
-        <ul>
-          <li>Role-based access for technicians and managers.</li>
-          <li>Secure JWT authentication for controlled access.</li>
-          <li>HTTPS and encrypted transport for all data in transit.</li>
-          <li>Audit-friendly case records for compliance reviews.</li>
-          <li>No consumer data scraping or data resale.</li>
-        </ul>
-      </section>
-
       <section class="container" id="social-proof">
         <div class="card testimonial">
-          <p class="quote">“BluePeak gives our managers real visibility into what happens in the field — without slowing technicians down.”</p>
-          <span class="quote-attribution">(Anonymous HVAC Service Manager)</span>
+          <p class="quote">&ldquo;BluePeak gives our managers real visibility into what happens in the field &mdash; without slowing technicians down.&rdquo;</p>
+          <span class="quote-attribution">&mdash; HVAC Service Manager</span>
         </div>
       </section>
-
       <section class="container" id="security">
         <h2>Security and trust</h2>
-        <p>BluePeak HVAC AI is designed to support enterprise expectations for data handling and access control.</p>
+        <p>Built for professional teams with real data-handling expectations.</p>
         <ul>
-          <li>Data handling is designed to support least-privilege access by role.</li>
-          <li>Authentication uses token-based access (JWT) to limit exposure of credentials.</li>
-          <li>Activity is designed to be auditable with structured logs for review.</li>
-          <li>Encryption in transit (HTTPS) protects data between users and the app.</li>
-          <li>No credential sharing; each user authenticates with their own account.</li>
+          <li>JWT authentication &mdash; each user signs in with their own account.</li>
+          <li>All data in transit encrypted with HTTPS.</li>
+          <li>Service manuals and case data stored on isolated, encrypted infrastructure.</li>
+          <li>No data resale or third-party advertising.</li>
+          <li>Audit-friendly case records for compliance reviews.</li>
         </ul>
+        <p style="margin-top:16px;"><a href="security.html" style="color:var(--accent);text-decoration:none;">Read our full security overview &rarr;</a></p>
       </section>
-
-      <section class="container" id="pricing">
-        <h2>Pilot Program</h2>
-        <div class="split">
-          <div class="card">
-            <strong>What the pilot includes</strong>
-            <ul>
-              <li>Guided cases tailored to HVAC workflows.</li>
-              <li>AI assistance that structures findings and recommendations.</li>
-              <li>MCP confidence gates to flag missing inputs and uncertainty.</li>
-              <li>Manager-ready reports for review, training, and compliance.</li>
-            </ul>
-          </div>
-          <div class="card">
-            <strong>Who it is for</strong>
-            <p>HVAC companies with approximately 5-20 technicians.</p>
-            <strong>What it is not</strong>
-            <p>Not a free trial. Limited enrollment.</p>
-          </div>
-        </div>
-      </section>
-
       <section class="container" id="cta">
-        <div class="band">
+        <div class="band" style="flex-direction:column;align-items:flex-start;gap:16px;padding:32px 28px;">
           <div>
-            <strong>Ready to see BluePeak in action?</strong>
-            <p>Apply for pilot access or request a tailored walkthrough.</p>
+            <strong style="font-size:22px;display:block;margin-bottom:6px;">Ready to diagnose smarter?</strong>
+            <p style="font-size:15px;">5 free analyses. No credit card. Start your first case in under a minute.</p>
           </div>
-          <div class="cta-row">
-            <a class="cta" href="mailto:info@bluepeakhvac.net">Apply for Pilot Access</a>
-            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Request a Demo</a>
+          <div class="cta-row" style="margin-top:0;">
+            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Try it free &rarr;</a>
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Talk to us</a>
           </div>
-          <p class="preview-caption">Pilot access is limited and reviewed to ensure fit.</p>
         </div>
       </section>
     </main>
-
     <footer>
       <div class="container">
         <div class="split">
           <div>
             <strong>BluePeak HVAC AI</strong>
-            <p>Guided diagnostics and reports for HVAC service teams.</p>
-            <p>Contact: <a href="mailto:info@bluepeakhvac.net">info@bluepeakhvac.net</a></p>
+            <p>Guided diagnostics for HVAC service teams.</p>
+            <p style="margin-top:6px;"><a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);text-decoration:none;">info@bluepeakhvac.net</a></p>
           </div>
-          <div class="footer-links">
+          <div class="footer-links" style="align-items:flex-start;padding-top:4px;">
             <a href="privacy.html">Privacy</a>
             <a href="terms.html">Terms</a>
             <a href="security.html">Security</a>
@@ -613,13 +241,12 @@
             <a href="contact.html">Contact</a>
           </div>
         </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:24px;">&copy; 2026 BluePeak HVAC AI. All rights reserved.</p>
       </div>
     </footer>
-
     <script>
       const toggle = document.getElementById("menuToggle");
       const nav = document.getElementById("navLinks");
-
       if (toggle && nav) {
         toggle.addEventListener("click", () => {
           const isOpen = nav.classList.toggle("open");
@@ -628,4 +255,4 @@
       }
     </script>
   </body>
-</html>
+                                  </html>
