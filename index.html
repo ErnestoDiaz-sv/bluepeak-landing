@@ -1,7 +1,6 @@
 <!--
   Redesigned 2026-05 -- app is now live with Stripe billing.
-  Removed pilot-program framing. All primary CTAs link to the live app.
-  Added real pricing section ($29/month, 5 free analyses).
+  CTAs disabled (Coming Soon) while app is being prepared for public launch.
 -->
 <!doctype html>
 <html lang="en">
@@ -37,6 +36,11 @@
       .cta.secondary { background:rgba(15,23,42,0.6); color:var(--text); border:1px solid rgba(148,163,184,0.22); }
       .cta.outline { background:transparent; color:var(--accent); border:1.5px solid var(--accent); }
       .cta.outline:hover { background:rgba(245,158,11,0.08); }
+      /* Disabled / Coming Soon state */
+      .cta.soon { background:rgba(148,163,184,0.15); color:var(--muted); border:1px solid rgba(148,163,184,0.2); pointer-events:none; cursor:not-allowed; gap:10px; }
+      .cta.soon:hover { transform:none; filter:none; }
+      .cta.outline.soon { background:transparent; color:var(--muted); border-color:rgba(148,163,184,0.2); }
+      .soon-badge { display:inline-flex; align-items:center; padding:2px 8px; border-radius:999px; background:rgba(245,158,11,0.15); color:var(--accent); font-size:11px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; border:1px solid rgba(245,158,11,0.3); }
       .menu-toggle { display:none; background:rgba(15,23,42,0.6); color:var(--text); border:1px solid rgba(148,163,184,0.22); padding:8px 12px; border-radius:10px; cursor:pointer; }
       main { padding:56px 0 72px; }
       .hero { display:grid; gap:20px; align-items:center; max-width:720px; }
@@ -78,7 +82,7 @@
       .quote-attribution { font-size:14px; color:var(--muted); }
       .split { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
       ul { margin:0; padding-left:18px; color:var(--muted); line-height:1.7; }
-      .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+      .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; align-items:center; }
       footer { border-top:1px solid var(--line); padding:28px 0 40px; background:rgba(11,15,26,0.4); }
       .footer-links { display:flex; gap:18px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
       .footer-links a { text-decoration:none; }
@@ -101,7 +105,7 @@
           <a href="contact.html">Contact</a>
         </nav>
         <div class="nav-cta">
-          <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Launch App &rarr;</a>
+          <span class="cta soon">Coming Soon <span class="soon-badge">Soon</span></span>
         </div>
       </div>
     </header>
@@ -112,10 +116,10 @@
           <h1>Stop guessing. Start diagnosing with confidence.</h1>
           <p>Upload your OEM service manual. Describe what you&apos;re seeing. BluePeak gives you ranked hypotheses, exact page citations, and step-by-step field tests &mdash; so every call ends with a clear answer, not a callback.</p>
           <div class="cta-row">
-            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Try it free &rarr;</a>
+            <span class="cta soon">Coming Soon <span class="soon-badge">Soon</span></span>
             <a class="cta secondary" href="#pricing">See pricing</a>
           </div>
-          <p style="font-size:14px;margin-top:4px;">5 free analyses &mdash; no credit card required.</p>
+          <p style="font-size:14px;margin-top:4px;color:var(--muted);">App launching soon &mdash; <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);text-decoration:none;">contact us</a> to get early access.</p>
         </div>
       </section>
       <section class="container" aria-label="Who uses this">
@@ -171,7 +175,7 @@
               <li><span class="check">&#10003;</span> Confidence levels + field steps</li>
               <li><span class="check">&#10003;</span> Case history saved</li>
             </ul>
-            <a class="cta outline" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener" style="margin-top:4px;">Start free &rarr;</a>
+            <span class="cta outline soon" style="margin-top:4px;">Coming Soon <span class="soon-badge">Soon</span></span>
           </div>
           <div class="pricing-card featured">
             <div><p class="price-label amber">Pro &middot; Monthly</p><div class="price-amount"><sup>$</sup>29<span class="price-period">/mo</span></div></div>
@@ -182,10 +186,10 @@
               <li><span class="check">&#10003;</span> Priority support</li>
               <li><span class="check">&#10003;</span> Cancel any time &mdash; no contracts</li>
             </ul>
-            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener" style="margin-top:4px;">Get started &rarr;</a>
+            <span class="cta soon" style="margin-top:4px;">Coming Soon <span class="soon-badge">Soon</span></span>
           </div>
         </div>
-        <p style="font-size:13px;margin-top:20px;color:var(--muted);">Need a team plan? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);text-decoration:none;">Contact us</a>.</p>
+        <p style="font-size:13px;margin-top:20px;color:var(--muted);">Interested in early access? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);text-decoration:none;">Contact us</a>.</p>
       </section>
       <section class="container" id="teams">
         <h2>For technicians and managers</h2>
@@ -215,12 +219,12 @@
       <section class="container" id="cta">
         <div class="band" style="flex-direction:column;align-items:flex-start;gap:16px;padding:32px 28px;">
           <div>
-            <strong style="font-size:22px;display:block;margin-bottom:6px;">Ready to diagnose smarter?</strong>
-            <p style="font-size:15px;">5 free analyses. No credit card. Start your first case in under a minute.</p>
+            <strong style="font-size:22px;display:block;margin-bottom:6px;">Launching soon &mdash; get notified first.</strong>
+            <p style="font-size:15px;">Be among the first HVAC teams to access BluePeak when we open to the public.</p>
           </div>
           <div class="cta-row" style="margin-top:0;">
-            <a class="cta" href="https://hvac-pdf-copilot.vercel.app" target="_blank" rel="noopener">Try it free &rarr;</a>
-            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Talk to us</a>
+            <span class="cta soon">Coming Soon <span class="soon-badge">Soon</span></span>
+            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">Contact us</a>
           </div>
         </div>
       </section>
@@ -255,4 +259,4 @@
       }
     </script>
   </body>
-                                  </html>
+        </html>
