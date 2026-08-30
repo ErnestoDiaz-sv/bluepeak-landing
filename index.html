@@ -1,23 +1,28 @@
 <!--
-  Redesigned 2026-05 — Fase 1 rewrite.
-  Tech-to-tech tone. Added origin story, scope/limitations, refund policy.
-  CTAs active — production launch 2026-05.
+  Redesigned 2026-08 -- Dovetail-inspired visual pass, approved by the user.
+  3D grid hero, pill nav, timeline "how it works", big quote-style story
+  section. Content, copy, colors and early-access positioning unchanged
+  from the previous rewrite -- this is a layout/visual pass on top of it.
 -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BluePeak HVAC AI — Guided Diagnostics for HVAC Technicians</title>
-    <meta name="description" content="BluePeak HVAC AI provides guided diagnostics backed by your OEM manuals, structured confidence levels, and step-by-step field tests for HVAC service teams." />
+    <title>BluePeak HVAC AI &middot; AI-Guided Diagnostics for HVAC Technicians</title>
+    <meta name="description" content="BluePeak reads your OEM service manual and turns a symptom description into ranked, cited hypotheses and field tests. Early access, currently free to try." />
     <link rel="canonical" href="https://bluepeakhvac.net/" />
-    <meta property="og:title" content="BluePeak HVAC AI — Guided Diagnostics for HVAC Technicians" />
-    <meta property="og:description" content="Diagnose HVAC equipment faster with AI-guided analysis backed by OEM service manuals." />
+    <meta property="og:title" content="BluePeak HVAC AI &middot; AI-Guided Diagnostics for HVAC Technicians" />
+    <meta property="og:description" content="Describe the symptom, get ranked hypotheses backed by the exact page of the manual they came from." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://bluepeakhvac.net/" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="BluePeak HVAC AI — Guided Diagnostics for HVAC Technicians" />
-    <meta name="twitter:description" content="Diagnose HVAC equipment faster with AI-guided analysis backed by OEM service manuals." />
+    <meta property="og:image" content="https://bluepeakhvac.net/assets/img/og-image.jpg" />
+    <meta property="og:image:width" content="1424" />
+    <meta property="og:image:height" content="752" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BluePeak HVAC AI &middot; AI-Guided Diagnostics for HVAC Technicians" />
+    <meta name="twitter:description" content="Describe the symptom, get ranked hypotheses backed by the exact page of the manual they came from." />
+    <meta name="twitter:image" content="https://bluepeakhvac.net/assets/img/og-image.jpg" />
     <link rel="icon" href="/favicon.ico" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap");
@@ -25,12 +30,13 @@
       :root {
         --bg: #0b0f1a;
         --bg-2: #111827;
+        --panel: #10161f;
+        --line: rgba(148, 163, 184, 0.16);
+        --line-2: rgba(148, 163, 184, 0.28);
         --accent: #f59e0b;
         --accent-2: #60a5fa;
         --text: #f9fafb;
-        --muted: #9ca3af;
-        --card: #0f172a;
-        --line: rgba(148, 163, 184, 0.18);
+        --muted: #9aa4b2;
       }
 
       * { box-sizing: border-box; }
@@ -39,909 +45,457 @@
         margin: 0;
         font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
         color: var(--text);
-        background:
-          radial-gradient(1200px 800px at 80% 10%, rgba(96, 165, 250, 0.15), transparent 60%),
-          radial-gradient(900px 700px at 10% 90%, rgba(245, 158, 11, 0.12), transparent 60%),
-          linear-gradient(135deg, var(--bg), var(--bg-2));
+        background-color: var(--bg);
+        background-image:
+          linear-gradient(rgba(11, 15, 26, 0.9), rgba(11, 15, 26, 0.9)),
+          url("assets/img/texture-schematic.webp");
+        background-size: 100% 100%, cover;
+        background-position: center, center top;
+        background-repeat: no-repeat, no-repeat;
         min-height: 100vh;
       }
 
-      a { color: inherit; }
+      a { color: inherit; text-decoration: none; }
+      a:hover { color: var(--accent); }
+      p { margin: 0; }
+      ::selection { background: rgba(245, 158, 11, 0.3); }
 
-      .container {
-        width: min(1100px, 100%);
-        margin: 0 auto;
-        padding: 0 24px;
-      }
+      .container { width: min(1240px, 100%); margin: 0 auto; padding: 0 24px; }
+      .container-narrow { width: min(1160px, 100%); margin: 0 auto; padding: 0 24px; }
 
-      /* ── Header ── */
+      /* ── Nav ── */
       header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        backdrop-filter: blur(18px);
-        background: rgba(11, 15, 26, 0.65);
+        z-index: 20;
+        backdrop-filter: blur(14px);
+        background: rgba(11, 15, 26, 0.7);
         border-bottom: 1px solid var(--line);
       }
+      .nav-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
+      .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+      .nav-links { display: flex; align-items: center; gap: 8px; }
+      .nav-pill { font-size: 14px; color: var(--muted); padding: 8px 16px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line); white-space: nowrap; }
+      .nav-pill:hover { color: var(--text); }
+      .btn { font-size: 15px; font-weight: 700; color: #1c1206; padding: 14px 26px; border-radius: 999px; background: var(--accent); display: inline-block; white-space: nowrap; }
+      .btn:hover { color: #1c1206; filter: brightness(1.06); }
+      .btn-sm { font-size: 14px; padding: 10px 20px; }
+      .btn-outline { font-size: 15px; font-weight: 600; color: var(--text); padding: 14px 26px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line-2); display: inline-block; }
+      .btn-outline:hover { color: var(--text); border-color: var(--accent); }
+      .menu-toggle { display: none; background: var(--panel); color: var(--text); border: 1px solid var(--line-2); padding: 8px 12px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 14px; }
 
-      .nav-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 0;
-        gap: 16px;
+      /* ── Hero ── */
+      .hero-section { position: relative; padding: 96px 0 64px; overflow: hidden; }
+      .grid-floor {
+        position: absolute; inset: 0; z-index: 0;
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 92%);
+        mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 92%);
       }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        text-decoration: none;
+      .grid-floor-plane {
+        position: absolute; left: 50%; top: -120px; width: 2400px; height: 1300px;
+        transform: translateX(-50%) perspective(700px) rotateX(62deg); transform-origin: top center;
+        background-image:
+          linear-gradient(rgba(148, 163, 184, 0.14) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px);
+        background-size: 64px 64px;
+        opacity: 0.8;
       }
-
-      .logoDot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, var(--accent), var(--accent-2));
-        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+      .hero-row { position: relative; z-index: 1; display: flex; align-items: center; gap: 56px; }
+      .hero-copy { flex: 1 1 520px; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
+      .badge {
+        display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px;
+        border-radius: 999px; background: var(--panel); border: 1px solid var(--line-2);
+        font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
       }
+      .badge-icon { width: 20px; height: 20px; border-radius: 5px; background: var(--accent); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+      h1 { margin: 0; font-size: 58px; line-height: 1.05; font-weight: 700; letter-spacing: -0.03em; }
+      .hero-sub { max-width: 520px; font-size: 18px; line-height: 1.6; color: var(--muted); }
+      .cta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .hero-art-col { flex: 1 1 420px; min-width: 0; position: relative; }
+      .hero-art-deco { position: absolute; right: -24px; top: -60px; width: 220px; height: 280px; opacity: 0.5; z-index: 0; }
+      .hero-art { position: relative; z-index: 1; width: 100%; display: block; border-radius: 20px; filter: drop-shadow(0 24px 46px rgba(0, 0, 0, 0.5)); }
 
-      .nav-links {
-        display: flex;
-        align-items: center;
-        gap: 18px;
-        font-size: 15px;
+      /* ── Trust strip ── */
+      .trust-strip {
+        display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: space-between;
+        padding: 20px 28px; border-radius: 18px; background: var(--panel); border: 1px solid var(--line);
+        margin: 0 auto 96px; max-width: 1000px;
       }
+      .trust-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+      .trust-tags { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      .trust-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 13px; }
 
-      .nav-links a {
-        text-decoration: none;
-        color: var(--muted);
+      /* ── Story ── */
+      .story-section { padding: 0 0 120px; }
+      .story-row { display: flex; gap: 48px; align-items: flex-start; }
+      .story-copy { flex: 1 1 620px; min-width: 0; display: flex; flex-direction: column; gap: 36px; }
+      .eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+      .quote-line { font-size: 34px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+      .quote-muted { color: var(--muted); }
+      .quote-bright { color: var(--text); }
+      .divider { height: 1px; background: var(--line); margin: 8px 0; }
+      .two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+      .body-p { font-size: 16px; line-height: 1.7; color: var(--muted); }
+      .footnote { font-size: 15px; line-height: 1.7; color: var(--muted); font-style: italic; }
+      .story-art-col { flex: 1 1 320px; min-width: 0; position: sticky; top: 100px; }
+      .story-art { width: 100%; display: block; border-radius: 18px; box-shadow: 0 18px 38px rgba(3, 7, 18, 0.45); }
+
+      /* ── How it works ── */
+      .how-section { padding: 0 0 120px; }
+      h2 { margin: 0 0 8px; font-size: 42px; font-weight: 700; letter-spacing: -0.02em; }
+      .timeline { display: flex; flex-direction: column; margin-top: 32px; }
+      .timeline-row { display: flex; gap: 24px; }
+      .timeline-rail { display: flex; flex-direction: column; align-items: center; width: 14px; flex-shrink: 0; }
+      .timeline-dot { width: 14px; height: 14px; background: var(--panel); border: 2px solid var(--line-2); flex-shrink: 0; }
+      .timeline-dot.active { border-color: var(--accent); }
+      .timeline-dot.filled { background: var(--accent); border: none; }
+      .timeline-line { flex: 1; width: 1px; background: var(--line-2); margin-top: 6px; }
+      .timeline-title { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+      .timeline-body { font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 520px; }
+
+      .mock-card { margin-top: 32px; border-radius: 18px; padding: 2px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(96, 165, 250, 0.22)); }
+      .mock-inner { background: #0d1420; border-radius: 16px; padding: 24px 26px; }
+      .mock-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+      .mock-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+      .mock-row:first-of-type { border-top: none; }
+      .mock-title { font-size: 15px; font-weight: 600; }
+      .mock-cite { font-size: 13px; color: var(--muted); margin-top: 2px; }
+      .mock-badge { font-size: 11px; font-weight: 700; letter-spacing: 0.03em; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+      .mock-badge.confirmed { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+      .mock-badge.supported { background: rgba(96, 165, 250, 0.15); color: var(--accent-2); }
+      .mock-badge.speculative { background: rgba(148, 163, 184, 0.15); color: var(--muted); }
+
+      /* ── Scope ── */
+      .scope-section { padding: 0 0 120px; }
+      .scope-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
+      .scope-card { padding: 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); }
+      .scope-card.limit { background: rgba(245, 158, 11, 0.04); border-color: rgba(245, 158, 11, 0.22); }
+      .scope-icon { margin-bottom: 12px; }
+      .scope-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+      .scope-body { font-size: 14px; line-height: 1.6; color: var(--muted); }
+
+      /* ── Access ── */
+      .access-section { padding: 0 0 120px; }
+      .access-card {
+        max-width: 820px; margin: 0 auto; padding: 48px; border-radius: 24px; background: var(--panel);
+        border: 1px solid rgba(245, 158, 11, 0.28); text-align: center;
+        display: flex; flex-direction: column; align-items: center; gap: 20px;
       }
+      .access-body { max-width: 520px; font-size: 16px; line-height: 1.7; color: var(--muted); }
 
-      .nav-links a:hover { color: var(--text); }
-
-      .nav-cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      /* ── Buttons ── */
-      .cta {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--accent);
-        color: #1f2937;
-        padding: 11px 22px;
-        border-radius: 999px;
-        font-weight: 700;
-        font-size: 15px;
-        text-decoration: none;
-        transition: transform 0.2s ease, filter 0.2s ease;
-        width: fit-content;
-      }
-
-      .cta:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.05);
-      }
-
-      .cta.secondary {
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-      }
-
-      .cta.outline {
-        background: transparent;
-        color: var(--accent);
-        border: 1.5px solid var(--accent);
-      }
-
-      .cta.outline:hover {
-        background: rgba(245, 158, 11, 0.08);
-      }
-
-      .cta.soon {
-        background: rgba(148, 163, 184, 0.15);
-        color: var(--muted);
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        pointer-events: none;
-        cursor: not-allowed;
-        gap: 10px;
-      }
-
-      .soon-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 2px 8px;
-        border-radius: 999px;
-        background: rgba(245, 158, 11, 0.15);
-        color: var(--accent);
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        border: 1px solid rgba(245, 158, 11, 0.3);
-      }
-
-      .menu-toggle {
-        display: none;
-        background: rgba(15, 23, 42, 0.6);
-        color: var(--text);
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        padding: 8px 12px;
-        border-radius: 10px;
-        cursor: pointer;
-      }
-
-      /* ── Layout ── */
-      main { padding: 56px 0 72px; }
-
-      .hero {
-        display: grid;
-        gap: 20px;
-        align-items: center;
-        max-width: 720px;
-      }
-
-      .eyebrow {
-        text-transform: uppercase;
-        letter-spacing: 0.18em;
-        font-size: 12px;
-        color: var(--accent);
-        font-weight: 700;
-      }
-
-      h1 {
-        font-size: clamp(34px, 5vw, 60px);
-        margin: 0;
-        line-height: 1.03;
-        letter-spacing: -0.02em;
-      }
-
-      h2 {
-        font-size: clamp(26px, 4vw, 42px);
-        margin: 0 0 12px;
-        letter-spacing: -0.02em;
-      }
-
-      h3 {
-        font-size: clamp(18px, 2.5vw, 24px);
-        margin: 0 0 10px;
-        letter-spacing: -0.01em;
-      }
-
-      p {
-        margin: 0;
-        color: var(--muted);
-        font-size: clamp(16px, 2vw, 18px);
-        line-height: 1.6;
-      }
-
-      section { padding: 64px 0; }
-
-      /* ── Cards ── */
-      .band {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-        padding: 18px 22px;
-        border-radius: 16px;
-        background: rgba(15, 23, 42, 0.7);
-        border: 1px solid rgba(148, 163, 184, 0.15);
-      }
-
-      .trust-strip { justify-content: space-between; }
-
-      .trust-icons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .trust-icon {
-        padding: 6px 12px;
-        border-radius: 999px;
-        border: 1px solid rgba(148, 163, 184, 0.22);
-        background: rgba(15, 23, 42, 0.6);
-        font-size: 13px;
-        color: var(--text);
-      }
-
-      .tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 12px;
-        border-radius: 999px;
-        font-size: 13px;
-        background: rgba(96, 165, 250, 0.12);
-        color: var(--text);
-        border: 1px solid rgba(96, 165, 250, 0.3);
-      }
-
-      .grid {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-
-      .card {
-        padding: 20px 22px;
-        background: rgba(15, 23, 42, 0.85);
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        box-shadow: 0 10px 26px rgba(3, 7, 18, 0.25);
-      }
-
-      .card strong {
-        display: block;
-        font-size: 17px;
-        margin-bottom: 8px;
-      }
-
-      /* ── Story section ── */
-      .story-block {
-        max-width: 780px;
-        padding: 36px 32px;
-        background: rgba(15, 23, 42, 0.7);
-        border-radius: 22px;
-        border: 1px solid rgba(96, 165, 250, 0.18);
-        display: grid;
-        gap: 20px;
-      }
-
-      .story-block p {
-        font-size: clamp(16px, 1.8vw, 18px);
-        line-height: 1.75;
-      }
-
-      .story-block p strong {
-        color: var(--text);
-      }
-
-      /* ── Scope / limitations ── */
-      .scope-grid {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        margin-top: 24px;
-      }
-
-      .scope-card {
-        padding: 20px 22px;
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: rgba(15, 23, 42, 0.85);
-      }
-
-      .scope-card.limit {
-        border-color: rgba(245, 158, 11, 0.2);
-        background: rgba(245, 158, 11, 0.04);
-      }
-
-      .scope-card strong {
-        display: block;
-        font-size: 16px;
-        margin-bottom: 8px;
-      }
-
-      /* ── How it works steps ── */
-      .steps {
-        display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        counter-reset: steps;
-      }
-
-      .step-card {
-        padding: 20px 22px;
-        background: rgba(15, 23, 42, 0.85);
-        border-radius: 18px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        counter-increment: steps;
-        position: relative;
-      }
-
-      .step-card::before {
-        content: counter(steps);
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        font-size: 28px;
-        font-weight: 700;
-        color: rgba(245, 158, 11, 0.15);
-        line-height: 1;
-      }
-
-      .step-card strong {
-        display: block;
-        font-size: 17px;
-        margin-bottom: 8px;
-      }
-
-      /* ── Product screenshots ── */
-      .preview-grid {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        margin-top: 20px;
-      }
-
-      .preview-card {
-        padding: 14px;
-        border-radius: 16px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        background: rgba(15, 23, 42, 0.75);
-      }
-
-      .preview-card img {
-        width: 100%;
-        border-radius: 12px;
-        display: block;
-        border: 1px solid rgba(148, 163, 184, 0.2);
-        box-shadow: 0 12px 30px rgba(3, 7, 18, 0.35);
-      }
-
-      .preview-label {
-        display: block;
-        margin-top: 10px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      /* ── Pricing ── */
-      .pricing-grid {
-        display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        margin-top: 32px;
-      }
-
-      .pricing-card {
-        padding: 28px 26px;
-        background: rgba(15, 23, 42, 0.85);
-        border-radius: 22px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .pricing-card.featured {
-        border-color: rgba(245, 158, 11, 0.4);
-        background: rgba(245, 158, 11, 0.05);
-      }
-
-      .price-label {
-        font-size: 13px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .price-label.amber { color: var(--accent); }
-
-      .price-amount {
-        font-size: 48px;
-        font-weight: 700;
-        letter-spacing: -0.03em;
-        line-height: 1;
-        color: var(--text);
-      }
-
-      .price-amount sup {
-        font-size: 22px;
-        vertical-align: super;
-        letter-spacing: 0;
-      }
-
-      .price-period {
-        font-size: 16px;
-        font-weight: 400;
-        color: var(--muted);
-      }
-
-      .price-desc {
-        color: var(--muted);
-        font-size: 15px;
-        line-height: 1.5;
-        margin: 0;
-      }
-
-      .price-features {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .price-features li {
-        display: flex;
-        align-items: flex-start;
-        gap: 8px;
-        font-size: 14px;
-        color: var(--muted);
-        line-height: 1.4;
-      }
-
-      .price-features li .check {
-        color: var(--accent);
-        flex-shrink: 0;
-        margin-top: 1px;
-      }
-
-      /* ── Refund policy ── */
-      .refund-block {
-        padding: 28px 28px;
-        background: rgba(15, 23, 42, 0.75);
-        border-radius: 20px;
-        border: 1px solid rgba(148, 163, 184, 0.15);
-        max-width: 720px;
-        display: grid;
-        gap: 14px;
-      }
-
-      .refund-block p {
-        font-size: 15px;
-      }
-
-      .refund-block ul {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
-        line-height: 1.9;
-        font-size: 15px;
-      }
-
-      /* ── Testimonial ── */
-      .testimonial {
-        display: grid;
-        gap: 10px;
-      }
-
-      .quote {
-        font-size: clamp(18px, 2.6vw, 22px);
-        color: var(--text);
-        font-style: italic;
-      }
-
-      .quote-attribution {
-        font-size: 14px;
-        color: var(--muted);
-      }
-
-      .split {
-        display: grid;
-        gap: 24px;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      }
-
-      ul {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-
-      .cta-row {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
+      /* ── Security ── */
+      .security-section { padding: 0 0 100px; }
+      .security-row { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; }
+      .security-icon { width: 72px; height: 72px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+      .security-body { flex: 1; min-width: 280px; }
+      .security-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+      .security-item { font-size: 14px; color: var(--muted); display: flex; gap: 10px; }
 
       /* ── Footer ── */
-      footer {
-        border-top: 1px solid var(--line);
-        padding: 28px 0 40px;
-        background: rgba(11, 15, 26, 0.4);
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 18px;
-        flex-wrap: wrap;
-        font-size: 14px;
-        color: var(--muted);
-      }
-
-      .footer-links a { text-decoration: none; }
-      .footer-links a:hover { color: var(--text); }
+      footer { border-top: 1px solid var(--line); padding: 36px 0 44px; }
+      .footer-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+      .footer-links { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); padding-top: 2px; }
 
       /* ── Responsive ── */
       @media (max-width: 900px) {
-        .nav-bar { flex-wrap: wrap; }
-      }
-
-      @media (max-width: 760px) {
+        .nav-links { display: none; }
         .menu-toggle { display: inline-flex; }
-        .nav-links {
-          display: none;
-          width: 100%;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 12px;
-          padding-bottom: 6px;
-        }
-        .nav-links.open { display: flex; }
-        .nav-cta { width: 100%; }
+        h1 { font-size: 42px; }
+        .quote-line { font-size: 26px; }
+        .hero-row { flex-direction: column; }
+        .hero-art-col { order: -1; max-width: 420px; }
+        .story-row { flex-direction: column; }
+        .story-art-col { position: static; max-width: 380px; margin: 0 auto; }
+        .two-col { grid-template-columns: 1fr; }
+        .scope-grid { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 640px) {
+        .nav-bar { flex-wrap: wrap; }
       }
     </style>
   </head>
   <body>
 
-    <!-- ── Navigation ── -->
+    <!-- ── Nav ── -->
     <header>
       <div class="container nav-bar">
         <a class="brand" href="index.html">
-          <span class="logoDot"></span>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="22" height="22" rx="6" fill="#151b28" stroke="var(--line-2)" />
+            <path d="M14.4 6.6a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3-3a5.2 5.2 0 0 1-6.8 6.8l-5.6 5.6a1.8 1.8 0 0 1-2.6-2.6l5.6-5.6a5.2 5.2 0 0 1 6.8-6.8l-3.4 2.6z" stroke="var(--accent)" stroke-width="1.4" stroke-linejoin="round" />
+          </svg>
           <span>BluePeak HVAC AI</span>
         </a>
+
         <button class="menu-toggle" type="button" id="menuToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+
         <nav class="nav-links" id="navLinks">
-          <a href="#story">Why we built this</a>
-          <a href="#product">Features</a>
-          <a href="#how">How it works</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#scope">Limitations</a>
-          <a href="#security">Security</a>
+          <a class="nav-pill" href="#story">Why I built this</a>
+          <a class="nav-pill" href="#how">How it works</a>
+          <a class="nav-pill" href="#scope">Limitations</a>
+          <a class="nav-pill" href="#security">Security</a>
         </nav>
-        <div class="nav-cta">
-          <span class="cta soon">Sign in <span class="soon-badge">Maintenance</span></span>
-        </div>
+
+        <a class="btn btn-sm" href="mailto:ernesto.josue.diaz@gmail.com?subject=BluePeak early access">Request access</a>
       </div>
     </header>
 
     <main>
 
       <!-- ── Hero ── -->
-      <section class="container" id="top">
-        <div class="hero">
-          <span class="eyebrow">Guided HVAC Diagnostics · Powered by AI</span>
-          <h1>Stop guessing. Start diagnosing with confidence.</h1>
-          <p>
-            Upload your OEM service manual. Describe what you're seeing. BluePeak gives you
-            ranked hypotheses, exact page citations, and step-by-step field tests — so every
-            call ends with a clear answer, not a callback.
-          </p>
-          <div class="cta-row">
-            <span class="cta soon">Try it free <span class="soon-badge">Maintenance</span></span>
-            <a class="cta secondary" href="#pricing">See pricing</a>
+      <section class="hero-section">
+        <div class="grid-floor"><div class="grid-floor-plane"></div></div>
+
+        <div class="container hero-row">
+          <div class="hero-copy">
+            <a class="badge" href="#story">
+              <span class="badge-icon">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 2 7l10 5 10-5-10-5Z" stroke="#1c1206" stroke-width="2" stroke-linejoin="round" /><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="#1c1206" stroke-width="2" stroke-linejoin="round" /></svg>
+              </span>
+              Early access &middot; read the story
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 17 17 7M9 7h8v8" stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+
+            <h1>Stop flipping through a 400&#8209;page manual mid&#8209;call.</h1>
+
+            <p class="hero-sub">
+              Describe the symptom. Upload the OEM manual if you have it. BluePeak gives you a
+              ranked list of likely causes, each one tied to the exact page it came from, plus the
+              field tests to confirm or rule it out.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn" href="mailto:ernesto.josue.diaz@gmail.com?subject=BluePeak early access">Request access</a>
+              <a class="btn-outline" href="#how">See how it works</a>
+            </div>
+
+            <p style="font-size: 13px; color: var(--muted);">Still early &middot; usage is free during this stage &middot; no card required</p>
           </div>
-          <p style="font-size:14px; margin-top:4px;">
-            The app is temporarily offline for maintenance. Back shortly.
-          </p>
+
+          <div class="hero-art-col">
+            <svg class="hero-art-deco" viewBox="0 0 220 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M190 10 L190 90 L140 90 L140 150 L165 150 L165 210 L110 210 L110 260" stroke="var(--accent-2)" stroke-width="1.4" />
+              <circle cx="190" cy="10" r="4" fill="var(--accent-2)" />
+              <circle cx="140" cy="90" r="3" fill="var(--accent-2)" />
+              <circle cx="165" cy="150" r="3" fill="var(--accent)" />
+              <rect x="104" y="254" width="12" height="12" fill="none" stroke="var(--muted)" stroke-width="1" />
+            </svg>
+            <img class="hero-art" src="assets/img/hero-diagnosis.webp" alt="Illustration of a service manual dissolving into ranked diagnostic data cards" width="1376" height="768" />
+          </div>
         </div>
       </section>
 
       <!-- ── Trust strip ── -->
-      <section class="container" aria-label="Who uses this">
-        <div class="band trust-strip">
-          <span class="tag">Who uses this</span>
-          <div class="trust-icons">
-            <span class="trust-icon">🔧 Field technicians</span>
-            <span class="trust-icon">📋 Case history</span>
-            <span class="trust-icon">🏢 HVAC companies</span>
+      <div class="container">
+        <div class="trust-strip">
+          <span class="trust-label">Who this is for</span>
+          <div class="trust-tags">
+            <span class="trust-tag">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.4 6.6a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3-3a5.2 5.2 0 0 1-6.8 6.8l-5.6 5.6a1.8 1.8 0 0 1-2.6-2.6l5.6-5.6a5.2 5.2 0 0 1 6.8-6.8l-3.4 2.6z" stroke="var(--accent)" stroke-width="1.6" stroke-linejoin="round" /></svg>
+              Field technicians
+            </span>
+            <span class="trust-tag">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 21V7l7-4 7 4v14M4 21h16M9 21v-6h4v6M9 11h.01M13 11h.01M9 15h.01M13 15h.01" stroke="var(--accent-2)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              HVAC service companies
+            </span>
           </div>
-          <span style="color:var(--muted); font-size:14px;">
-            Diagnose faster. Document everything. Reduce callbacks.
-          </span>
+          <span style="font-size: 13px; color: var(--muted);">Also open to conversations about API/integration access.</span>
         </div>
-      </section>
+      </div>
 
-      <!-- ── Origin Story ── -->
-      <section class="container" id="story">
-        <h2>Why we built this</h2>
-        <div class="story-block">
-          <p>
-            If you've worked in the field, you know the feeling: <strong>you're on a call with a unit
-            you haven't seen before</strong>, the customer is waiting, and you're cross-referencing a
-            400-page PDF on your phone trying to find the one table that tells you what suction pressure
-            should look like at 95°F ambient. Meanwhile the dispatcher wants an ETA on the part.
-          </p>
-          <p>
-            BluePeak started from that frustration. <strong>Not from a startup looking for a market —
-            from someone who has been in that situation and wanted a better tool.</strong> The idea is
-            simple: your OEM manuals have the answers. The hard part is getting to them fast, on-site,
-            under pressure.
-          </p>
-          <p>
-            What we built is a diagnostic assistant that reads the manual for you. You describe what
-            you're seeing — symptoms, readings, equipment behavior — and it gives you a ranked list of
-            root causes, each one tied to a specific page and section in the manual, with the exact
-            field tests you need to confirm or rule it out.
-          </p>
-          <p>
-            <strong>This is not a replacement for your judgment.</strong> You still have to make the
-            call. But it means you're making that call with the manual actually in your hands — even
-            when you're standing in a mechanical room with no signal and a wet phone screen.
-          </p>
-          <p>
-            We're a small team. We're building this carefully and incrementally, and we'd rather ship
-            something honest than something flashy. If you try it and it doesn't work the way you
-            expected, tell us. The goal is a tool that earns your trust one diagnosis at a time.
-          </p>
-        </div>
-      </section>
+      <!-- ── Why I built this ── -->
+      <section class="story-section" id="story">
+        <div class="container-narrow story-row">
+          <div class="story-copy">
+            <span class="eyebrow">Why I built this</span>
 
-      <!-- ── Product screenshots ── -->
-      <section class="container" id="preview">
-        <h2>Built for the field</h2>
-        <p>A clean, mobile-friendly interface built for the field — works on any phone with a data connection.</p>
-        <div class="preview-grid">
-          <div class="preview-card">
-            <img src="assets/screenshots/login.png" alt="BluePeak secure login screen" loading="lazy" />
-            <span class="preview-label">Secure login — each tech has their own account</span>
-          </div>
-          <div class="preview-card">
-            <img src="assets/screenshots/case-view.png" alt="BluePeak case view with hypotheses and field tests" loading="lazy" />
-            <span class="preview-label">Ranked hypotheses with manual citations and field steps</span>
-          </div>
-        </div>
-      </section>
+            <p class="quote-line quote-muted">
+              You&rsquo;re on a call with a unit you haven&rsquo;t seen before. The customer is waiting, and
+              you&rsquo;re scrolling a 400&#8209;page PDF on your phone trying to find the one table that tells
+              you what suction pressure should look like at 95&deg;F ambient.
+            </p>
 
-      <!-- ── Features ── -->
-      <section class="container" id="product">
-        <h2>Everything you need on a service call</h2>
-        <div class="grid">
-          <div class="card">
-            <strong>🔍 OEM-backed analysis</strong>
-            <p>Upload the service manual once. Every hypothesis links to the exact page, section, and reference value from the manufacturer.</p>
+            <p class="quote-line quote-bright">
+              BluePeak started from that, not from a market study. The manuals already have the
+              answers. The hard part is finding them fast, on&#8209;site, under pressure.
+            </p>
+
+            <div class="divider"></div>
+
+            <div class="two-col">
+              <p class="body-p">
+                You describe what you&rsquo;re seeing: symptoms, readings, equipment behavior. BluePeak
+                reads the manual and gives you a ranked list of likely causes, each tied to a
+                specific page and section, with the field tests you need to confirm or rule it out.
+              </p>
+              <p class="body-p">
+                It doesn&rsquo;t replace your judgment &mdash; you still make the call. It just means
+                you&rsquo;re making it with the manual actually in front of you, even in a mechanical
+                room with no signal and a cracked phone screen.
+              </p>
+            </div>
+
+            <p class="footnote">
+              This is early. I&rsquo;m building it carefully, and I&rsquo;d rather ship something honest
+              than something flashy. If you try it and something&rsquo;s off, tell me directly &mdash; it
+              goes to my inbox.
+            </p>
           </div>
-          <div class="card">
-            <strong>📊 Confidence levels</strong>
-            <p>Each hypothesis is rated CONFIRMED, SUPPORTED, POSSIBLE, or SPECULATIVE — so you know how solid the diagnosis is before you pull a part.</p>
-          </div>
-          <div class="card">
-            <strong>🛠 Step-by-step field tests</strong>
-            <p>Not just "what to test" — exact steps, required tools, and pass/fail reference values straight from the manual.</p>
-          </div>
-          <div class="card">
-            <strong>📌 Missing data flags</strong>
-            <p>BluePeak tells you which readings it needs to raise confidence, so you know what to measure before you leave the unit.</p>
-          </div>
-          <div class="card">
-            <strong>📁 Persistent case records</strong>
-            <p>Every case is saved with the full analysis. Come back later or hand off to another tech without losing context.</p>
-          </div>
-          <div class="card">
-            <strong>✅ Resolve or escalate</strong>
-            <p>Close a case as resolved or unresolved when the job is done. Keep your service history clean and auditable.</p>
+
+          <div class="story-art-col">
+            <img class="story-art" src="assets/img/story-technician.webp" alt="Illustration of a technician checking a phone next to a condensing unit at night" width="1408" height="768" />
           </div>
         </div>
       </section>
 
       <!-- ── How it works ── -->
-      <section class="container" id="how">
-        <h2>How it works</h2>
-        <p>Three steps from the service call to a clear answer.</p>
-        <div class="steps" style="margin-top:24px;">
-          <div class="step-card">
-            <strong>Start a case</strong>
-            <p>Enter the equipment brand, model, and what you're observing — high suction, low delta-T, locked compressor, whatever the complaint is.</p>
-          </div>
-          <div class="step-card">
-            <strong>Upload the service manual</strong>
-            <p>Drop in the OEM PDF. BluePeak indexes it and uses it to back every finding with a manual citation. Skip this step if you don't have it — the analysis still works.</p>
-          </div>
-          <div class="step-card">
-            <strong>Get ranked hypotheses + tests</strong>
-            <p>BluePeak returns a prioritized list of root causes, the evidence level for each, and the exact field tests to confirm or rule them out.</p>
-          </div>
-          <div class="step-card">
-            <strong>Resolve and document</strong>
-            <p>Mark the case resolved. The full analysis is saved to your case history for review, handoff, or callbacks.</p>
-          </div>
-        </div>
-      </section>
+      <section class="how-section" id="how">
+        <div class="container-narrow">
+          <h2>How it works</h2>
 
-      <!-- ── Scope and Limitations ── -->
-      <section class="container" id="scope">
-        <h2>Scope and limitations</h2>
-        <p>We'd rather be upfront about what this tool does and doesn't do than oversell it.</p>
-        <div class="scope-grid">
-
-          <div class="scope-card">
-            <strong>✅ What BluePeak does well</strong>
-            <p>Cross-references your symptom description against the OEM manual and surfaces the most likely root causes — fast. Works best when you give it clear, specific symptoms and readings.</p>
-          </div>
-
-          <div class="scope-card">
-            <strong>✅ Manual-backed citations</strong>
-            <p>Every hypothesis links to a specific page and section in the uploaded service manual. If no manual is uploaded, BluePeak uses general HVAC knowledge and marks findings accordingly.</p>
-          </div>
-
-          <div class="scope-card limit">
-            <strong>⚠️ AI can be wrong</strong>
-            <p>BluePeak uses a large language model. It can make mistakes, miss context, or produce plausible-sounding output that doesn't match your specific unit. Always verify findings against the actual equipment before ordering parts or making recommendations.</p>
-          </div>
-
-          <div class="scope-card limit">
-            <strong>⚠️ Not for emergencies</strong>
-            <p>Do not use this tool as a primary guide for situations involving active gas leaks, carbon monoxide, live electrical hazards, or any condition that puts people at immediate risk. Follow your safety protocols first.</p>
-          </div>
-
-          <div class="scope-card limit">
-            <strong>⚠️ Output quality depends on input</strong>
-            <p>Vague symptom descriptions produce vague results. The more specific you are — actual readings, observed behavior, ambient conditions — the more useful the analysis will be.</p>
-          </div>
-
-          <div class="scope-card limit">
-            <strong>⚠️ Manual format matters</strong>
-            <p>BluePeak works best with OEM service manuals in standard PDF format. Scanned images, handwritten notes, or heavily formatted catalogs may not index correctly and may reduce citation accuracy.</p>
-          </div>
-
-        </div>
-        <p style="margin-top:20px; font-size:14px;">
-          Questions about a specific use case? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent); text-decoration:none;">Ask us directly →</a>
-        </p>
-      </section>
-
-      <!-- ── Pricing ── -->
-      <section class="container" id="pricing">
-        <h2>Simple, flat pricing</h2>
-        <p>Start free. Subscribe when you're ready. No per-seat fees, no hidden limits.</p>
-        <div class="pricing-grid">
-
-          <div class="pricing-card">
-            <div>
-              <p class="price-label">Free Trial</p>
-              <div class="price-amount"><sup>$</sup>0</div>
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-rail"><div class="timeline-dot active"></div><div class="timeline-line"></div></div>
+              <div style="padding-bottom: 32px;">
+                <p class="timeline-title">Describe the symptom</p>
+                <p class="timeline-body">No manual on hand? Type in what you&rsquo;re seeing &mdash; high superheat, ice on the line, unit short-cycling &mdash; and get a first read right away.</p>
+              </div>
             </div>
-            <p class="price-desc">Try it on real calls. No credit card needed.</p>
-            <ul class="price-features">
-              <li><span class="check">✓</span> 5 full analyses included</li>
-              <li><span class="check">✓</span> OEM manual upload &amp; indexing</li>
-              <li><span class="check">✓</span> Confidence levels + field steps</li>
-              <li><span class="check">✓</span> Case history saved</li>
-            </ul>
-            <span class="cta soon" style="margin-top:4px;">Start free <span class="soon-badge">Maintenance</span></span>
-          </div>
 
-          <div class="pricing-card featured">
-            <div>
-              <p class="price-label amber">Pro · Monthly</p>
-              <div class="price-amount"><sup>$</sup>29<span class="price-period">/mo</span></div>
+            <div class="timeline-row">
+              <div class="timeline-rail"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+              <div style="padding-bottom: 32px;">
+                <p class="timeline-title">Or upload the manual</p>
+                <p class="timeline-body">Drop in the OEM PDF and BluePeak indexes it so every finding cites the exact page and section it&rsquo;s based on.</p>
+              </div>
             </div>
-            <p class="price-desc">Up to 200 analyses/month for one user. Cancel any time.</p>
-            <ul class="price-features">
-              <li><span class="check">✓</span> <strong style="color:var(--text);">200 analyses</strong>/month</li>
-              <li><span class="check">✓</span> Everything in the free trial</li>
-              <li><span class="check">✓</span> Priority support</li>
-              <li><span class="check">✓</span> Cancel any time — no contracts</li>
-            </ul>
-            <span class="cta soon" style="margin-top:4px;">Get started <span class="soon-badge">Maintenance</span></span>
+
+            <div class="timeline-row">
+              <div class="timeline-rail"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+              <div style="padding-bottom: 32px;">
+                <p class="timeline-title">Get ranked causes + tests</p>
+                <p class="timeline-body">Each hypothesis comes with a confidence label and the field test to confirm or rule it out &mdash; not just a guess.</p>
+              </div>
+            </div>
+
+            <div class="timeline-row">
+              <div class="timeline-rail"><div class="timeline-dot filled"></div></div>
+              <div>
+                <p class="timeline-title">Save the case</p>
+                <p class="timeline-body">Everything stays on the case record. Come back to it later, or hand it to another tech without re-explaining the problem from scratch.</p>
+              </div>
+            </div>
           </div>
 
+          <div class="mock-card" aria-label="Illustrative example, not a live screenshot">
+            <div class="mock-inner">
+              <p class="mock-label">Example output &middot; unit not cooling, high superheat</p>
+
+              <div class="mock-row">
+                <div>
+                  <p class="mock-title">Low refrigerant charge</p>
+                  <p class="mock-cite">Manual p. 42, charging table</p>
+                </div>
+                <span class="mock-badge confirmed">CONFIRMED</span>
+              </div>
+
+              <div class="mock-row">
+                <div>
+                  <p class="mock-title">Restricted metering device</p>
+                  <p class="mock-cite">Manual p. 58, TXV troubleshooting</p>
+                </div>
+                <span class="mock-badge supported">SUPPORTED</span>
+              </div>
+
+              <div class="mock-row">
+                <div>
+                  <p class="mock-title">Dirty condenser coil</p>
+                  <p class="mock-cite">General knowledge, no manual citation</p>
+                </div>
+                <span class="mock-badge speculative">SPECULATIVE</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <p style="font-size:13px; margin-top:20px; color: var(--muted);">
-          Need a team plan or have questions? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent); text-decoration:none;">Contact us</a>.
-        </p>
       </section>
 
-      <!-- ── Refund Policy ── -->
-      <section class="container" id="refund">
-        <h2>Refund policy</h2>
-        <p>We keep this simple and fair.</p>
-        <div class="refund-block" style="margin-top:24px;">
-          <div>
-            <h3 style="color:var(--text);">48-hour refund window — unused accounts only</h3>
-            <p style="margin-top:8px;">
-              If you subscribe to Pro and haven't run any analyses yet, contact us within
-              <strong style="color:var(--text);">48 hours of your first payment</strong> and we'll
-              issue a refund net of payment processing fees (typically ~3%).
+      <!-- ── Scope and limitations ── -->
+      <section class="scope-section" id="scope">
+        <div class="container-narrow">
+          <h2>Scope and limitations</h2>
+          <p style="font-size: 16px; color: var(--muted);">Better to say this upfront than have you find out the hard way.</p>
+
+          <div class="scope-grid">
+            <div class="scope-card">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6 9 17l-5-5" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">What it does well</p>
+              <p class="scope-body">Cross-references your symptom description against the OEM manual and surfaces the most likely causes fast.</p>
+            </div>
+
+            <div class="scope-card">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6 9 17l-5-5" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">Manual-backed citations</p>
+              <p class="scope-body">Every hypothesis links to a specific page and section. Without a manual, it falls back to general knowledge and says so.</p>
+            </div>
+
+            <div class="scope-card limit">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">The model can be wrong</p>
+              <p class="scope-body">It&rsquo;s an LLM. Verify findings against the actual equipment before ordering parts.</p>
+            </div>
+
+            <div class="scope-card limit">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">Not for emergencies</p>
+              <p class="scope-body">Gas leaks, carbon monoxide, live electrical hazards &mdash; follow your safety protocols first, always.</p>
+            </div>
+
+            <div class="scope-card limit">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">Output depends on input</p>
+              <p class="scope-body">A vague symptom description gets a vague answer. Real readings make the analysis useful.</p>
+            </div>
+
+            <div class="scope-card limit">
+              <svg class="scope-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              <p class="scope-title">Manual format matters</p>
+              <p class="scope-body">Standard PDF manuals work best. Scanned images may index poorly and reduce citation accuracy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Get access ── -->
+      <section class="access-section" id="access">
+        <div class="container">
+          <div class="access-card">
+            <h2 style="margin: 0;">Get access</h2>
+            <p class="access-body">
+              No signup form yet, no pricing yet. Email me and I&rsquo;ll set you up with an account
+              directly. If you&rsquo;re evaluating this for a company or a platform rather than trying
+              it yourself, say that too &mdash; it&rsquo;s a different conversation.
             </p>
-          </div>
-          <ul>
-            <li>Refunds are only available if <strong style="color:var(--text);">no analyses have been run</strong> under your account.</li>
-            <li>The 48-hour window starts at the moment of your first Pro payment.</li>
-            <li>Refunds are issued net of Stripe payment processing fees (~3%), which we cannot recover.</li>
-            <li>Subsequent billing cycles are non-refundable. You can cancel at any time to stop future charges.</li>
-            <li>Cancelling stops future billing immediately. Access continues until the end of the current billing period.</li>
-            <li>The free trial (5 analyses) is free — there is nothing to refund for the trial tier.</li>
-          </ul>
-          <p>
-            To request a refund, email <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent); text-decoration:none;">info@bluepeakhvac.net</a> with the subject line
-            <strong style="color:var(--text);">"Refund request"</strong> and your account email. We verify usage and process eligible refunds within 3–5 business days.
-          </p>
-          <p style="font-size:14px; margin-top:4px;">
-            <a href="terms.html" style="color:var(--accent); text-decoration:none;">Full terms of service →</a>
-          </p>
-        </div>
-      </section>
-
-      <!-- ── For technicians ── -->
-      <section class="container" id="teams">
-        <h2>Built for the technician in the field</h2>
-        <div class="card" style="max-width:600px;">
-          <strong>🔧 Technicians first</strong>
-          <p style="margin-top:8px;">Follow structured prompts, get clear next steps, and back every decision with a manual citation — even on unfamiliar equipment.</p>
-          <p style="margin-top:10px;">Designed to support your professional judgment, not replace it. You stay in control — BluePeak just makes the manual useful in the moment.</p>
-        </div>
-      </section>
-
-      <!-- ── Coming Features ── -->
-      <section class="container" id="roadmap">
-        <h2>What's coming next</h2>
-        <p style="color:var(--muted); margin-bottom:24px;">BluePeak is actively developed. Here's what's on the roadmap based on real technician feedback.</p>
-        <div class="scope-grid">
-          <div class="scope-card">
-            <span class="scope-icon">📋</span>
-            <strong>Manager dashboard</strong>
-            <p>Review all open cases across your team. See confidence levels, missing data flags, and QA notes at a glance.</p>
-          </div>
-          <div class="scope-card">
-            <span class="scope-icon">📁</span>
-            <strong>Multi-document cases</strong>
-            <p>Upload multiple PDFs per case — OEM manual, service bulletin, and SOP all in one diagnosis.</p>
-          </div>
-          <div class="scope-card">
-            <span class="scope-icon">📄</span>
-            <strong>Case report export</strong>
-            <p>Download a formatted PDF of the full diagnosis to attach to your work order or share with the customer.</p>
-          </div>
-          <div class="scope-card">
-            <span class="scope-icon">👥</span>
-            <strong>Team plans</strong>
-            <p>Multi-seat subscriptions so your whole crew runs on the same tool — with shared case history.</p>
-          </div>
-          <div class="scope-card">
-            <span class="scope-icon">🔩</span>
-            <strong>Parts recommendations</strong>
-            <p>Based on the diagnosis, BluePeak suggests likely parts to have on the truck before the second visit.</p>
-          </div>
-          <div class="scope-card">
-            <span class="scope-icon">🌐</span>
-            <strong>Spanish language support</strong>
-            <p>Full interface and analysis output in Spanish — because a lot of great techs work in Spanish.</p>
+            <a class="btn" href="mailto:ernesto.josue.diaz@gmail.com?subject=BluePeak early access">Request access &rarr;</a>
           </div>
         </div>
-        <p style="margin-top:20px; color:var(--muted); font-size:14px;">
-          Have a feature request? <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent); text-decoration:none;">Email us</a> — we read every message.
-        </p>
       </section>
 
       <!-- ── Security ── -->
-      <section class="container" id="security">
-        <h2>Security and trust</h2>
-        <p>Built for professional teams with real data-handling expectations.</p>
-        <ul style="margin-top:16px;">
-          <li>JWT authentication — each user signs in with their own account.</li>
-          <li>All data in transit encrypted with HTTPS.</li>
-          <li>Service manuals and case data stored on isolated, encrypted infrastructure.</li>
-          <li>No data resale or third-party advertising.</li>
-          <li>Audit-friendly case records for compliance reviews.</li>
-        </ul>
-        <p style="margin-top:16px;">
-          <a href="security.html" style="color:var(--accent); text-decoration:none;">Read our full security overview →</a>
-        </p>
-      </section>
-
-      <!-- ── CTA band ── -->
-      <section class="container" id="cta">
-        <div class="band" style="flex-direction:column; align-items:flex-start; gap:16px; padding: 32px 28px;">
-          <div>
-            <strong style="font-size:22px; display:block; margin-bottom:6px;">Interested? Get notified at launch.</strong>
-            <p style="font-size:15px;">We're finishing final testing. Drop us an email and we'll let you know when the app is ready.</p>
+      <section class="security-section" id="security">
+        <div class="container-narrow security-row">
+          <div class="security-icon">
+            <img src="assets/img/security-shield.webp" alt="" width="56" height="56" style="width: 56px; height: 56px; object-fit: contain;" />
           </div>
-          <div class="cta-row" style="margin-top:0;">
-            <a class="cta" href="mailto:info@bluepeakhvac.net?subject=Notify me at launch">
-              Notify me →
-            </a>
-            <a class="cta secondary" href="mailto:info@bluepeakhvac.net">
-              Talk to us
-            </a>
+          <div class="security-body">
+            <h2 style="font-size: 32px;">Security</h2>
+            <p style="font-size: 15px; color: var(--muted);">The basics are handled, even at this stage.</p>
+            <div class="security-list">
+              <p class="security-item"><span style="color: var(--accent);">&bull;</span> Authenticated accounts, each technician signs in on their own.</p>
+              <p class="security-item"><span style="color: var(--accent);">&bull;</span> All data in transit encrypted with HTTPS.</p>
+              <p class="security-item"><span style="color: var(--accent);">&bull;</span> Service manuals and case data stored on isolated, encrypted infrastructure.</p>
+              <p class="security-item"><span style="color: var(--accent);">&bull;</span> No data resale or third-party advertising.</p>
+            </div>
+            <p style="margin-top: 16px; font-size: 14px;"><a href="security.html" style="color: var(--accent);">Full security overview &rarr;</a></p>
           </div>
         </div>
       </section>
@@ -950,27 +504,22 @@
 
     <!-- ── Footer ── -->
     <footer>
-      <div class="container">
-        <div class="split">
-          <div>
-            <strong>BluePeak HVAC AI</strong>
-            <p>Guided diagnostics for HVAC service teams.</p>
-            <p style="margin-top:6px;">
-              <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent); text-decoration:none;">info@bluepeakhvac.net</a>
-            </p>
-          </div>
-          <div class="footer-links" style="align-items:flex-start; padding-top:4px;">
-            <a href="privacy.html">Privacy</a>
-            <a href="terms.html">Terms</a>
-            <a href="#refund">Refund</a>
-            <a href="security.html">Security</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-          </div>
+      <div class="container footer-row">
+        <div>
+          <p style="font-weight: 700; font-size: 15px;">BluePeak HVAC AI</p>
+          <p style="font-size: 13px; color: var(--muted); margin-top: 6px;">AI-guided diagnostics for HVAC technicians. Early access.</p>
+          <p style="font-size: 13px; margin-top: 8px;"><a href="mailto:ernesto.josue.diaz@gmail.com" style="color: var(--accent);">ernesto.josue.diaz@gmail.com</a></p>
         </div>
-        <p style="font-size:13px; color:var(--muted); margin-top:24px;">
-          © 2026 BluePeak HVAC AI. All rights reserved.
-        </p>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="security.html">Security</a>
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div class="container">
+        <p style="font-size: 13px; color: var(--muted); margin-top: 24px;">&copy; 2026 BluePeak HVAC AI.</p>
       </div>
     </footer>
 
@@ -979,295 +528,14 @@
       const nav = document.getElementById("navLinks");
       if (toggle && nav) {
         toggle.addEventListener("click", () => {
-          const isOpen = nav.classList.toggle("open");
-          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+          const isOpen = nav.style.display === "flex";
+          nav.style.display = isOpen ? "none" : "flex";
+          nav.style.flexDirection = "column";
+          nav.style.width = "100%";
+          nav.style.gap = "8px";
+          toggle.setAttribute("aria-expanded", isOpen ? "false" : "true");
         });
       }
-    </script>
-
-    <!-- ── Support Chatbot ── -->
-    <style>
-      #bp-chat-bubble {
-        position: fixed; bottom: 24px; right: 24px; z-index: 9999;
-        width: 52px; height: 52px; border-radius: 50%;
-        background: var(--accent); border: none; cursor: pointer;
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 4px 24px rgba(245,158,11,0.4);
-        transition: transform 0.2s;
-      }
-      #bp-chat-bubble:hover { transform: scale(1.08); }
-      #bp-chat-bubble svg { width: 24px; height: 24px; fill: #0b0f1a; }
-
-      #bp-chat-window {
-        position: fixed; bottom: 88px; right: 24px; z-index: 9999;
-        width: 340px; max-height: 480px;
-        background: #0f172a; border: 1px solid rgba(148,163,184,0.18);
-        border-radius: 16px; display: flex; flex-direction: column;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-        font-family: "Space Grotesk", system-ui, sans-serif;
-        overflow: hidden; display: none;
-      }
-      #bp-chat-header {
-        background: var(--accent); color: #0b0f1a;
-        padding: 14px 16px; font-weight: 700; font-size: 14px;
-        display: flex; align-items: center; gap: 8px; justify-content: space-between;
-      }
-      #bp-chat-header span { display: flex; align-items: center; gap: 8px; }
-      #bp-chat-close { background: none; border: none; cursor: pointer; font-size: 18px; color: #0b0f1a; line-height: 1; }
-      #bp-chat-messages {
-        flex: 1; overflow-y: auto; padding: 16px; display: flex;
-        flex-direction: column; gap: 10px; min-height: 200px;
-      }
-      .bp-msg {
-        max-width: 85%; padding: 10px 13px; border-radius: 12px;
-        font-size: 13px; line-height: 1.5;
-      }
-      .bp-msg.bot {
-        background: #1e293b; color: #f1f5f9; align-self: flex-start;
-        border-bottom-left-radius: 4px;
-      }
-      .bp-msg.user {
-        background: var(--accent); color: #0b0f1a; align-self: flex-end;
-        border-bottom-right-radius: 4px; font-weight: 500;
-      }
-      #bp-chat-quick {
-        padding: 8px 12px; display: flex; flex-wrap: wrap; gap: 6px;
-        border-top: 1px solid rgba(148,163,184,0.1);
-      }
-      .bp-q {
-        background: #1e293b; color: #94a3b8; border: 1px solid rgba(148,163,184,0.2);
-        border-radius: 20px; padding: 5px 12px; font-size: 12px; cursor: pointer;
-        font-family: inherit; transition: all 0.15s;
-      }
-      .bp-q:hover { background: var(--accent); color: #0b0f1a; border-color: var(--accent); }
-      #bp-chat-input-row {
-        display: flex; gap: 8px; padding: 10px 12px;
-        border-top: 1px solid rgba(148,163,184,0.1);
-      }
-      #bp-chat-input {
-        flex: 1; background: #1e293b; border: 1px solid rgba(148,163,184,0.2);
-        color: #f1f5f9; border-radius: 8px; padding: 8px 12px;
-        font-size: 13px; font-family: inherit; outline: none;
-      }
-      #bp-chat-input::placeholder { color: #64748b; }
-      #bp-chat-send {
-        background: var(--accent); color: #0b0f1a; border: none;
-        border-radius: 8px; padding: 8px 14px; cursor: pointer;
-        font-weight: 700; font-size: 13px; font-family: inherit;
-      }
-      #bp-chat-send:hover { opacity: 0.9; }
-      @media (max-width: 400px) {
-        #bp-chat-window { width: calc(100vw - 32px); right: 16px; bottom: 80px; }
-        #bp-chat-bubble { right: 16px; bottom: 16px; }
-      }
-    </style>
-
-    <!-- Bubble button -->
-    <button id="bp-chat-bubble" aria-label="Open support chat">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
-      </svg>
-    </button>
-
-    <!-- Chat window -->
-    <div id="bp-chat-window" role="dialog" aria-label="BluePeak support chat">
-      <div id="bp-chat-header">
-        <span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#0b0f1a" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-6h2zm0-8h-2V7h2z"/>
-          </svg>
-          BluePeak Support
-        </span>
-        <button id="bp-chat-close" aria-label="Close chat">✕</button>
-      </div>
-      <div id="bp-chat-messages"></div>
-      <div id="bp-chat-quick"></div>
-      <div id="bp-chat-input-row">
-        <input id="bp-chat-input" type="text" placeholder="Ask a question…" autocomplete="off" />
-        <button id="bp-chat-send">Send</button>
-      </div>
-    </div>
-
-    <script>
-    (function () {
-      // ── Easter egg ──────────────────────────────────────────────
-      function launchConfetti() {
-        const canvas = document.createElement("canvas");
-        canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999";
-        document.body.appendChild(canvas);
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const pieces = Array.from({length: 120}, () => ({
-          x: Math.random() * canvas.width,
-          y: Math.random() * -canvas.height,
-          r: Math.random() * 7 + 4,
-          d: Math.random() * 80 + 20,
-          color: ["#f59e0b","#60a5fa","#34d399","#f472b6","#a78bfa"][Math.floor(Math.random()*5)],
-          tilt: Math.random() * 10 - 5,
-          tiltAngle: 0,
-          tiltSpeed: Math.random() * 0.1 + 0.05,
-        }));
-        let frame = 0;
-        function draw() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          pieces.forEach(p => {
-            ctx.beginPath();
-            ctx.ellipse(p.x + p.tilt, p.y, p.r, p.r * 0.4, p.tiltAngle, 0, Math.PI * 2);
-            ctx.fillStyle = p.color;
-            ctx.fill();
-            p.y += Math.cos(frame / p.d) + 2;
-            p.x += Math.sin(frame / p.d) * 1.2;
-            p.tiltAngle += p.tiltSpeed;
-            p.tilt = Math.sin(p.tiltAngle) * 12;
-          });
-          frame++;
-          if (frame < 160) requestAnimationFrame(draw);
-          else canvas.remove();
-        }
-        draw();
-      }
-
-      const EASTER_EGG = {
-        triggers: ["who made","who built","yours","your product","you make","you build","founder","ernesto","creator","who created","who is behind","who wrote"],
-        a: `<span style="font-size:16px">⚙️</span> <strong>Built by Ernesto</strong> — one too many bad callbacks and a lot of coffee ☕<br><br><span style="color:#94a3b8;font-size:12px">From the field to the code.</span>`
-      };
-
-      const QA = [
-        {
-          triggers: ["price","cost","how much","pricing","plan","subscription","dollar","pay","charge"],
-          q: "How much does it cost?",
-          a: "BluePeak Pro is a monthly subscription — $29/month. You get 5 free analyses to try it out, no credit card needed. Pro gives you up to 200 analyses per month. You can cancel any time."
-        },
-        {
-          triggers: ["cancel","cancellation","stop","unsubscribe"],
-          q: "How do I cancel?",
-          a: "You can cancel anytime from your account settings. Your access continues until the end of the current billing period — no penalty, no hassle."
-        },
-        {
-          triggers: ["refund","money back","return"],
-          q: "What's the refund policy?",
-          a: "If you haven't run any analyses yet, you can request a refund within 48 hours of your first payment. Refunds are issued net of payment processing fees (~3%). Email info@bluepeakhvac.net with subject 'Refund request'."
-        },
-        {
-          triggers: ["pdf","manual","upload","document","oem","service bulletin"],
-          q: "What PDFs can I upload?",
-          a: "OEM service manuals, service bulletins, and SOPs work best. The AI reads the actual pages and cites specific page numbers in every answer. Scanned PDFs with clear text also work."
-        },
-        {
-          triggers: ["brand","carrier","trane","daikin","lennox","goodman","rheem","york","mitsubishi","work with"],
-          q: "What brands does it support?",
-          a: "Any brand — Carrier, Trane, Daikin, Lennox, Goodman, Rheem, York, Mitsubishi, and more. You upload your own OEM manuals, so BluePeak works with whatever equipment you service."
-        },
-        {
-          triggers: ["trial","free","5 analysis","five analysis","try"],
-          q: "How does the free trial work?",
-          a: "You get 5 full analyses completely free — no credit card required to start. Each analysis gives you hypotheses, next field tests, page references, and step-by-step procedures from your manual."
-        },
-        {
-          triggers: ["accurate","wrong","mistake","hallucinate","reliable","trust"],
-          q: "How accurate is it?",
-          a: "Every answer is grounded in the manual you uploaded. The AI cites the exact page number for each recommendation, so you can verify it yourself. If the manual doesn't cover something, BluePeak says so — it won't invent procedures."
-        },
-        {
-          triggers: ["secure","security","data","privacy","store","safe"],
-          q: "Is my data secure?",
-          a: "Your PDFs are stored encrypted on Cloudflare R2. Each case is isolated — your documents are never used to train AI models or shared with other users. See our security page for details."
-        },
-        {
-          triggers: ["internet","field","offline","connection","no wifi"],
-          q: "Does it work offline?",
-          a: "BluePeak requires an internet connection — it's a web app. A smartphone with a cellular data plan works fine in the field."
-        },
-        {
-          triggers: ["team","multiple","technician","company","crew","share"],
-          q: "Can my whole team use it?",
-          a: "Right now each subscription is per user. Team plans are on the roadmap. Email us at info@bluepeakhvac.net if you need multiple seats — we'll work something out."
-        }
-      ];
-
-      const FALLBACK = `I don't have a ready answer for that one. Email us at <a href="mailto:info@bluepeakhvac.net" style="color:var(--accent);">info@bluepeakhvac.net</a> and we'll get back to you — usually within 1 business day.`;
-      const GREETING = "Hey! 👋 I'm the BluePeak support bot. Ask me anything about the product, pricing, or how it works.";
-
-      const bubble = document.getElementById("bp-chat-bubble");
-      const win    = document.getElementById("bp-chat-window");
-      const msgs   = document.getElementById("bp-chat-messages");
-      const quick  = document.getElementById("bp-chat-quick");
-      const input  = document.getElementById("bp-chat-input");
-      const send   = document.getElementById("bp-chat-send");
-      const close  = document.getElementById("bp-chat-close");
-
-      let opened = false;
-
-      function addMsg(text, who) {
-        const d = document.createElement("div");
-        d.className = "bp-msg " + who;
-        d.innerHTML = text;
-        msgs.appendChild(d);
-        msgs.scrollTop = msgs.scrollHeight;
-      }
-
-      function showQuick() {
-        quick.innerHTML = "";
-        const sample = QA.slice(0, 4);
-        sample.forEach(item => {
-          const b = document.createElement("button");
-          b.className = "bp-q";
-          b.textContent = item.q;
-          b.addEventListener("click", () => { answer(item.q, item.a); });
-          quick.appendChild(b);
-        });
-      }
-
-      function answer(question, reply) {
-        quick.innerHTML = "";
-        addMsg(question, "user");
-        setTimeout(() => {
-          addMsg(reply, "bot");
-          // show fewer follow-up suggestions after reply
-          const followUps = QA.filter(i => i.q !== question).slice(0, 3);
-          followUps.forEach(item => {
-            const b = document.createElement("button");
-            b.className = "bp-q";
-            b.textContent = item.q;
-            b.addEventListener("click", () => answer(item.q, item.a));
-            quick.appendChild(b);
-          });
-        }, 300);
-      }
-
-      function handleInput(text) {
-        const q = text.trim().toLowerCase();
-        if (!q) return;
-        input.value = "";
-        if (EASTER_EGG.triggers.some(t => q.includes(t))) {
-          addMsg(text.trim(), "user");
-          setTimeout(() => {
-            launchConfetti();
-            addMsg(EASTER_EGG.a, "bot");
-          }, 300);
-          return;
-        }
-        const match = QA.find(item => item.triggers.some(t => q.includes(t)));
-        answer(text.trim(), match ? match.a : FALLBACK);
-      }
-
-      bubble.addEventListener("click", () => {
-        const isOpen = win.style.display === "flex";
-        win.style.display = isOpen ? "none" : "flex";
-        win.style.flexDirection = "column";
-        if (!opened) {
-          opened = true;
-          addMsg(GREETING, "bot");
-          showQuick();
-        }
-      });
-
-      close.addEventListener("click", () => { win.style.display = "none"; });
-
-      send.addEventListener("click", () => handleInput(input.value));
-      input.addEventListener("keydown", e => { if (e.key === "Enter") handleInput(input.value); });
-    })();
     </script>
   </body>
 </html>
