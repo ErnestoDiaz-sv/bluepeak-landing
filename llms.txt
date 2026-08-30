@@ -1,0 +1,20 @@
+# BluePeak HVAC AI
+
+> AI-guided diagnostics for HVAC technicians. Describe a symptom or upload an OEM service manual and get ranked, cited hypotheses and field tests, each backed by the exact page of the manual it came from.
+
+BluePeak is an early-access product built by a solo developer, not a company. There is no self-serve signup yet -- access is granted by email. No pricing has been set; usage is free during this stage.
+
+## Product
+
+- [Home](https://bluepeakhvac.net/): what BluePeak does, how it works, scope and limitations
+- [About](https://bluepeakhvac.net/about.html): who built it and why
+- [Security](https://bluepeakhvac.net/security.html): data handling and security overview
+
+## Contact
+
+- [Contact](https://bluepeakhvac.net/contact.html) or email ernesto.josue.diaz@gmail.com to request access, ask questions, or discuss company/platform integration.
+
+## Legal
+
+- [Privacy](https://bluepeakhvac.net/privacy.html)
+- [Terms](https://bluepeakhvac.net/terms.html)
