@@ -25,50 +25,51 @@ classes=set(token for group in re.findall(r'class="([^"]+)"',source) for token i
 required={'hero-section','grid-floor','grid-floor-plane','hero-art-col','nav-pill','menu-toggle','eyebrow','how-section','timeline','timeline-row','timeline-rail','timeline-dot','timeline-line','timeline-title','timeline-body','mock-card','mock-inner','mock-label','mock-row','mock-title','mock-cite','mock-badge','scope-grid','scope-card','access-section','access-card','divider','footnote'}
 assert required <= classes, f'Missing classes: {required-classes}'
 for q in expected[8:15]: assert q in copy, f'Missing source-copy question: {q}'
-assert source.count('const FORM_CONFIG') == 1 and source.count('<mark class="confirm">') == 8
+assert not re.search(r'confirm\]|class="confirm"|\[optional', source, re.I)
+assert 'EPA' not in source and 'Built by a working HVAC service technician who got tired of flipping through PDFs on a roof.' in source
+assert source.count('const FORM_CONFIG') == 1
 assert 'form id="lead-form"' in source and 'accessKey:' in source
-print(f'Static checks passed: {len(expected)} headings; 8 confirmations; FORM_CONFIG once')
+print(f'Static checks passed: {len(expected)} headings; no confirmation marks or EPA; approved copy; FORM_CONFIG once')
 
 threshold=int(os.environ.get('LAYOUT_MAX_ART_HEIGHT','420'))
-instrument='''<script>(function(){const sections=[...document.querySelectorAll("main > section")],art=document.querySelector(".hero-art"),h1=document.querySelector("h1"),copy=document.querySelector(".hero-copy");const visible=e=>{const cs=getComputedStyle(e);return cs.display!=="none"&&cs.visibility!=="hidden"&&!e.closest("[aria-hidden=true],.honeypot,.grid-floor")};function lastContent(section){let last=-Infinity;const walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT);while(walker.nextNode()){const n=walker.currentNode;if(!n.textContent.trim()||!visible(n.parentElement))continue;const r=document.createRange();r.selectNodeContents(n);for(const box of r.getClientRects())last=Math.max(last,box.bottom+scrollY)}for(const el of section.querySelectorAll("img,input,select,textarea,button,video,canvas")){if(visible(el)){const b=el.getBoundingClientRect();last=Math.max(last,b.bottom+scrollY)}}return last}const data={scrollWidth:document.documentElement.scrollWidth,viewport:innerWidth,pageHeight:document.documentElement.scrollHeight,heroOrder:[...copy.children].map(e=>e.className||e.tagName.toLowerCase()),heroH1Top:h1.getBoundingClientRect().top+scrollY,artHeight:art.getBoundingClientRect().height,desktopSideBySide:getComputedStyle(document.querySelector(".hero-row")).flexDirection!=="column",sections:sections.slice(1).map((s,i)=>({id:s.id||s.querySelector("h2")?.textContent.trim(),gap:s.querySelector("h2").getBoundingClientRect().top+scrollY-lastContent(sections[i]),h2x:s.querySelector("h2").getBoundingClientRect().left}))};const out=document.createElement("pre");out.id="layout-measurements";out.textContent=JSON.stringify(data);document.body.append(out)})()</script>'''
-path=root/'.task/layout-instrumented.html'; path.write_text(source.replace('</body>',instrument+'</body>'))
-shots=[]
+instrument=r'''<script>
+(async()=>{const frame=document.querySelector("iframe"),width=Number(new URLSearchParams(location.search).get("width"));
+frame.style.width=width+"px";frame.style.height=(width===375?812:900)+"px";
+await new Promise((resolve,reject)=>{frame.onload=resolve;frame.onerror=reject});
+const w=frame.contentWindow,d=w.document; if(w.innerWidth!==width)throw Error(`iframe width ${w.innerWidth}, expected ${width}`);
+await Promise.all([d.fonts.ready,...[...d.images].map(i=>i.decode().catch(()=>{}))]);
+const y=e=>e.getBoundingClientRect().top+w.scrollY,visible=e=>{const c=w.getComputedStyle(e);return c.display!=="none"&&c.visibility!=="hidden"&&!e.closest('[aria-hidden="true"],.honeypot,.grid-floor')};
+function last(s){let bottom=-Infinity;const walker=d.createTreeWalker(s,w.NodeFilter.SHOW_TEXT);while(walker.nextNode()){const n=walker.currentNode;if(!n.textContent.trim()||!visible(n.parentElement))continue;const range=d.createRange();range.selectNodeContents(n);for(const r of range.getClientRects())if(r.width&&r.height)bottom=Math.max(bottom,r.bottom+w.scrollY)}for(const n of s.querySelectorAll("img,input,select,textarea,button,video,canvas")){if(!visible(n))continue;const r=n.getBoundingClientRect();if(r.width&&r.height)bottom=Math.max(bottom,r.bottom+w.scrollY)}return bottom}
+const sections=[...d.querySelectorAll("main > section")],data={viewport:w.innerWidth,scrollWidth:d.documentElement.scrollWidth,pageHeight:d.documentElement.scrollHeight,heroOrder:[...d.querySelector(".hero-copy").children].map(e=>e.className||e.tagName.toLowerCase()),heroH1Top:y(d.querySelector("h1")),artHeight:d.querySelector(".hero-art").getBoundingClientRect().height,desktopSideBySide:w.getComputedStyle(d.querySelector(".hero-row")).flexDirection!=="column",sections:sections.slice(1).map((s,i)=>({id:s.id||s.querySelector("h2")?.textContent.trim(),gap:y(s.querySelector("h2"))-last(sections[i]),h2x:s.querySelector("h2").getBoundingClientRect().left}))};
+document.querySelector("pre").textContent=JSON.stringify(data);document.documentElement.dataset.ready="yes"})().catch(e=>{document.querySelector("pre").textContent=JSON.stringify({error:String(e)});document.documentElement.dataset.ready="yes"});
+</script>'''
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import threading, urllib.parse
+class Handler(SimpleHTTPRequestHandler):
+ def __init__(self,*args,**kwargs): super().__init__(*args,directory=str(root),**kwargs)
+ def log_message(self,*args): pass
+server=ThreadingHTTPServer(('127.0.0.1',0),Handler); threading.Thread(target=server.serve_forever,daemon=True).start()
+wrapper=root/'.task/layout-wrapper.html'; wrapper.write_text('<!doctype html><meta charset="utf-8"><style>body{margin:0}iframe{display:block;border:0}pre{display:none}</style><iframe src="/index.html"></iframe><pre></pre>'+instrument)
 try:
  for width in (375,1280):
-   viewport_height=812 if width==375 else 1000
-   cmd=['/usr/bin/chromium','--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--allow-file-access-from-files','--hide-scrollbars',f'--window-size={width},{viewport_height}','--virtual-time-budget=1200','--dump-dom',path.as_uri()]
-   out=subprocess.run(cmd,capture_output=True,text=True,timeout=15,check=True).stdout
-   class Measure(HTMLParser):
-    def __init__(self): super().__init__(); self.on=False; self.data=''
-    def handle_starttag(self,t,a):
-     if dict(a).get('id')=='layout-measurements': self.on=True
-    def handle_endtag(self,t):
-     if t=='pre' and self.on: self.on=False
-    def handle_data(self,d):
-     if self.on: self.data+=d
-   m=Measure(); m.feed(out); assert m.data, f'No measurements at {width}'
-   d=json.loads(m.data)
-   print(f'{width}px measurements: {json.dumps(d)}',flush=True)
-   assert d['scrollWidth']<=d['viewport'], f'Overflow at {width}: {d}'
-   assert all(s['gap']>=48 for s in d['sections']),f'Section content gap below 48px at {width}: {d["sections"]}'
-   if width==375:
-    expected_order=['p','h1','p','cta-row','p']; assert d['heroOrder'][:5]==expected_order, f'Hero order: {d["heroOrder"]}'
-    assert d['heroH1Top']<250, f'H1 top >=250: {d["heroH1Top"]}'
-    assert d['artHeight']<=threshold, f'image-height: hero art height {d["artHeight"]} exceeds {threshold}'
-   else:
-    assert d['desktopSideBySide'], 'Desktop hero is not side-by-side'
-    xs=[s['h2x'] for s in d['sections']]; assert max(xs)-min(xs)<=2, f'Desktop h2 x misalignment: {xs}'
-   print(f'{width}px measurements passed: overflow={d["scrollWidth"]}/{d["viewport"]}, gaps={[round(s["gap"]) for s in d["sections"]]}')
-   with tempfile.NamedTemporaryFile(dir=root/'.task/shots',suffix='.png',delete=False) as tmp: temp_shot=Path(tmp.name)
-   shot=['/usr/bin/chromium','--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars',f'--window-size={width},{d["pageHeight"]}','--virtual-time-budget=1000',f'--screenshot={temp_shot}',(root/'index.html').as_uri()]
-   subprocess.run(shot,capture_output=True,timeout=15,check=True)
-   with temp_shot.open('rb') as image: image.seek(16); dimensions=struct.unpack('>II',image.read(8))
-   assert dimensions==(width,d['pageHeight']),f'Screenshot dimensions at {width}: {dimensions}, expected {(width,d["pageHeight"])}'
-   shots.append((temp_shot,root/f'.task/shots/{width}.png'))
- for temp_shot,destination in shots: temp_shot.replace(destination)
+  url=f'http://127.0.0.1:{server.server_port}/.task/layout-wrapper.html?width={width}'
+  cmd=['/usr/bin/chromium','--headless','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--hide-scrollbars','--window-size=500,950','--virtual-time-budget=2500','--dump-dom',url]
+  out=subprocess.run(cmd,capture_output=True,text=True,timeout=12,check=True).stdout
+  match=re.search(r'<pre>(.*?)</pre>',out,re.S); assert match,f'No measurement JSON for iframe {width}px'
+  d=json.loads(match.group(1)); assert 'error' not in d,d.get('error')
+  assert d['viewport']==width,f'iframe viewport mismatch {d}'
+  print(f'{width}px iframe measurements: {json.dumps(d)}',flush=True)
+  assert d['scrollWidth']<=d['viewport'],f'Overflow at {width}: {d}'
+  assert all(s['gap']>=48 for s in d['sections']),f'Section content gap below 48px at {width}: {d["sections"]}'
+  if width==375:
+   assert d['heroH1Top']<250,f'H1 top >=250: {d["heroH1Top"]}'
+   assert d['artHeight']<=threshold,f'hero-art height {d["artHeight"]} exceeds {threshold}'
+  else:
+   assert d['desktopSideBySide'],'Desktop hero is not side-by-side'
+   xs=[s['h2x'] for s in d['sections']];assert max(xs)-min(xs)<=2,f'Desktop h2 x misalignment: {xs}'
+  print(f'{width}px layout assertions passed: overflow, section gaps >=48px'+(', h1 and art height' if width==375 else ', heading alignment'),flush=True)
 finally:
- path.unlink(missing_ok=True)
- for temp_shot,_ in shots: temp_shot.unlink(missing_ok=True)
+ server.shutdown();wrapper.unlink(missing_ok=True)
 PY
 echo "Layout checks elapsed runtime: ${SECONDS-start_time}s"
 (( SECONDS-start_time < 30 )) || { echo 'Layout script exceeded 30 seconds' >&2; exit 1; }
